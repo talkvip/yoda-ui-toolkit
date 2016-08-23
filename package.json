@@ -1,12 +1,12 @@
 {
   "name": "yoda-ui-toolkit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Collection of reusable react ui components",
   "repository": "https://github.com/vgmr/yoda-ui-toolkit/",
   "private": false,
   "main": "dist/lib/index.js",
   "typings": "dist/lib/index.d.ts",
-  "files" :[
+  "files": [
     "dist/lib"
   ],
   "devDependencies": {
