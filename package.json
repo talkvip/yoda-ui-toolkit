@@ -1,12 +1,18 @@
 {
-  "name": "ui-kit",
+  "name": "yoda-ui-toolkit",
   "version": "0.0.1",
-  "private": true,
+  "description": "Collection of reusable react ui components",
+  "repository": "https://github.com/vgmr/yoda-ui-toolkit/",
+  "private": false,
   "main": "dist/lib/index.js",
   "typings": "dist/lib/index.d.ts",
   "devDependencies": {
-    "tsapp-scripts": "0.1.18",
-    "react-test-renderer": "^15.3.0"
+    "babel-cli": "^6.11.4",
+    "babel-plugin-transform-es2015-parameters": "^6.11.4",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "react-test-renderer": "^15.3.0",
+    "rimraf": "^2.5.4",
+    "tsapp-scripts": "0.1.18"
   },
   "dependencies": {
     "react": "^15.3.0",
@@ -16,8 +22,10 @@
     "bootstrap": "^3.3.7"
   },
   "scripts": {
-    "start": "tsapp-scripts start",
-    "build": "tsc",
+    "start": "rimraf dist && tsapp-scripts start",
+    "release": "npm run build && npm version patch && npm publish",
+    "build": "rimraf dist && tsc",
+    "postbuild": "babel dist -d dist",
     "test": "tsapp-scripts test",
     "test:watch": "npm run -s test & npm run -s test --  --u --watch --onlyChanged"
   }
