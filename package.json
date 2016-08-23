@@ -1,0 +1,24 @@
+{
+  "name": "ui-kit",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/lib/index.js",
+  "typings": "dist/lib/index.d.ts",
+  "devDependencies": {
+    "tsapp-scripts": "0.1.18",
+    "react-test-renderer": "^15.3.0"
+  },
+  "dependencies": {
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "react-addons-css-transition-group": "^15.3.0",
+    "react-bootstrap": "^0.30.2",
+    "bootstrap": "^3.3.7"
+  },
+  "scripts": {
+    "start": "tsapp-scripts start",
+    "build": "tsc",
+    "test": "tsapp-scripts test",
+    "test:watch": "npm run -s test & npm run -s test --  --u --watch --onlyChanged"
+  }
+}

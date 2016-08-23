@@ -1,0 +1,75 @@
+exports[`App renders a welcome view 1`] = `
+<div>
+  <nav
+    className="navbar navbar-inverse">
+    <div
+      className="container">
+      <div
+        className="navbar-header">
+        <img
+          className="navbar-brand"
+          src="test-file-stub" />
+        <button
+          className="navbar-toggle collapsed"
+          onClick={[Function bound handleToggle]}
+          type="button">
+          <span
+            className="sr-only">
+            Toggle navigation
+          </span>
+          <span
+            className="icon-bar" />
+          <span
+            className="icon-bar" />
+          <span
+            className="icon-bar" />
+        </button>
+      </div>
+      <ul
+        className="nav navbar-nav"
+        role={null}>
+        <ul
+          className="nav navbar-nav"
+          role={null}>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}>
+            <a
+              href=""
+              onClick={[Function bound handleClick]}
+              role="button">
+              HOME
+            </a>
+          </li>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}>
+            <a
+              href=""
+              onClick={[Function bound handleClick]}
+              role="button">
+              Products
+            </a>
+          </li>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}>
+            <a
+              href=""
+              onClick={[Function bound handleClick]}
+              role="button">
+              Current List
+            </a>
+          </li>
+        </ul>
+      </ul>
+      <div
+        aria-expanded={null}
+        className="navbar-collapse collapse" />
+    </div>
+  </nav>
+</div>
+`;
