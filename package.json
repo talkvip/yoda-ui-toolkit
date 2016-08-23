@@ -6,6 +6,9 @@
   "private": false,
   "main": "dist/lib/index.js",
   "typings": "dist/lib/index.d.ts",
+  "files" :[
+    "dist/lib"
+  ],
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-plugin-transform-es2015-parameters": "^6.11.4",
