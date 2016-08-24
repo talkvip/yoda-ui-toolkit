@@ -33,6 +33,7 @@ class Demo extends React.Component<any, any> {
 
     render() {
         const props: TableProps<any> = {
+            enablePaging: true,
             activePage: this.state.activePage,
             columns: [{ name: 'col1' }, { name: 'col2' }],
             items: this.state.items,

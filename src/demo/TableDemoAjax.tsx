@@ -57,6 +57,7 @@ class Demo extends React.Component<any, IDemoState> {
 
     render() {
         const props: TableProps<QueryItem> = {
+            enablePaging:true,
             activePage: this.state.activePage,
             columns: [{ name: 'Title' }, { name: 'Address' }, { name: 'City' }],
             items: this.state.items,
