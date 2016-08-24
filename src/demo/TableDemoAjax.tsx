@@ -60,15 +60,21 @@ class Demo extends React.Component<any, IDemoState> {
             activePage: this.state.activePage,
             columns: [{ name: 'Title' }, { name: 'Address' }, { name: 'City' }],
             items: this.state.items,
-            numOfPages: this.state.items ? 100: 0,
-            pageChange: this.onSearch
+            numOfPages: this.state.items ? this.state.activePage +1:0,
+            pageChange: this.onSearch,
+            itemRender: (colName: string, item:QueryItem) =>{
+                if ( colName == 'Title') {
+                    return <a href={item.MapUrl} target='_blank'> {item.Title} </a>
+                }
+                return item[colName];
+            }
             // itemRender: (colName, item) => {
             //     if (colName === 'col1') return <button>{item}</button>
             //     return item;
             // }
         }
         return <div>
-            <input type='text' ref = {(e) => this.searchInput = e} onKeyDown ={this.onKeyPress}/>
+            <input style={{width:'200px'}} type='text' ref = {(e) => this.searchInput = e} onKeyDown ={this.onKeyPress} placeholder='enter query search (e.g. pizza)'/>
             <button onClick={() => this.onSearch(1) }> Search </button>
             <hr/>
             {this.state.loading && <Spinner/>}
@@ -104,7 +110,7 @@ export interface QueryItem {
     Address: string;
     City: string;
     State: string;
-    mapUrl: string;
+    MapUrl: string;
     Ratuing: {
         AverageRating: number
     }
