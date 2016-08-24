@@ -7,19 +7,25 @@ export interface ColumnDefinition {
 }
 
 export interface TableConfig<T> {
-    columns: ColumnDefinition[];
+    columns: (ColumnDefinition | string)[];
     itemStyle?: (colName: string, item: T) => React.CSSProperties;
     itemRender?: (colName: string, item: T) => string | Element | JSX.Element;
     itemClass?: (colName: string, item: T) => string;
 }
 
+const getName = (col: string | ColumnDefinition): string => {
+    return typeof col === "string" ? col : col.name;
+}
+
 const createHeader = function <TProps>({columns}: TableConfig<TProps>) {
+    const getCaption = (col: string | ColumnDefinition): string => {
+        return typeof col === "string" ? col : col.caption ? col.caption : col.name;
+    }
+
     return (
         <tr>
             {
-                columns.map((col, i) =>
-                    <th key={`${i}_${col.name}`}>{col.caption || col.name}</th>
-                )
+                columns.map((col, i) => <th key={`${i}_${getName(col)}`}>{getCaption(col) }</th>)
             }
         </tr>
     )
@@ -28,11 +34,12 @@ const createHeader = function <TProps>({columns}: TableConfig<TProps>) {
 const createRows = function <T>(items, tableProps: TableConfig<T>) {
     const createRow = function <T>(item: any, {columns, itemStyle, itemRender, itemClass}: TableConfig<T>) {
         return columns.map((col, i) => {
-            let itemRendered = itemRender && itemRender(col.name, item);
-            if (!itemRendered) itemRendered = item[col.name];
-            let itemStyled = itemStyle && itemStyle(col.name, item);
+            const colName = getName(col);
+            let itemRendered = itemRender && itemRender(colName, item);
+            if (!itemRendered) itemRendered = item[colName];
+            let itemStyled = itemStyle && itemStyle(colName, item);
             if (!itemStyled) itemStyled = {};
-            let itemClasses = itemClass && itemClass(col.name, item);
+            let itemClasses = itemClass && itemClass(colName, item);
             if (!itemClasses) itemClasses = '';
             return (
                 <td
@@ -50,6 +57,7 @@ const createRows = function <T>(items, tableProps: TableConfig<T>) {
 }
 
 export interface TableProps<T> extends TableConfig<T> {
+    enablePaging: boolean,
     activePage: number,
     numOfPages: number,
     pageChange: (page: number) => void,
@@ -61,6 +69,18 @@ export interface TableProps<T> extends TableConfig<T> {
 const table = (props: TableProps<any>) => {
     const header = createHeader(props);
     const rows = createRows(props.items, props);
+    const paging = props.enablePaging &&
+        <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis={props.ellipsis}
+            boundaryLinks
+            items={props.numOfPages}
+            maxButtons={props.maxPageButtons || 5}
+            activePage={props.activePage}
+            onSelect={props.pageChange} />
     return (
         <div>
             <Table striped bordered>
@@ -71,17 +91,7 @@ const table = (props: TableProps<any>) => {
                     {rows}
                 </tbody>
             </Table>
-            <Pagination
-                prev
-                next
-                first
-                last
-                ellipsis={props.ellipsis}
-                boundaryLinks
-                items={props.numOfPages}
-                maxButtons={props.maxPageButtons || 5}
-                activePage={props.activePage}
-                onSelect={props.pageChange} />
+            {paging}
         </div>
     )
 }
