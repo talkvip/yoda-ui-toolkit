@@ -24,7 +24,7 @@ class Demo extends React.Component<any, any> {
                 activePage: page,
                 items: items.slice((page-1)*10,(page-1)*10 +10)
             })
-        }, 500);
+        }, 100);
     }    
     
     render() { 

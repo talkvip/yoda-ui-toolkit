@@ -26,8 +26,18 @@ const createHeader = function <TProps>({columns}: TableConfig<TProps>) {
 
 const createRows = function <T>(items, tableProps: TableConfig<T>) {
     const createRow = function <T>(item: any, {columns, itemStyle, itemRender}: TableConfig<T>) {
-        return columns.map((col, i) =>
-            <td key={i} style={ itemStyle && itemStyle(col.name, item) }>{ (itemRender && itemRender(col.name, item)) || item[col.name]}</td>
+        return columns.map((col, i) => {
+            let itemRendered = itemRender && itemRender(col.name, item);
+            if (!itemRendered) itemRendered = item[col.name];
+            let itemStyled = itemStyle && itemStyle(col.name, item);
+            if (!itemStyled) itemStyled = {};
+            return (
+                <td
+                    key={i}
+                    style={itemStyled}>{itemRendered}
+                </td>
+            )
+        }
         );
     }
     return items.map((item, i) =>
@@ -70,5 +80,4 @@ const table = (props: TableProps<any>) => {
         </div>
     )
 }
-
 export default table;
