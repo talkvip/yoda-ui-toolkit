@@ -10,7 +10,7 @@ for (let i = 0; i < 100; i++) {
 }
 
 class Demo extends React.Component<any, any> {
-    
+
     constructor(props) {
         super(props);
         this.state = {
