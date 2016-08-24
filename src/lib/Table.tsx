@@ -6,10 +6,11 @@ export interface ColumnDefinition {
     caption?: string
 }
 
-export interface TableConfig<TRec> {
+export interface TableConfig<T> {
     columns: ColumnDefinition[];
-    itemStyle?: (colName: string, item: TRec) => React.CSSProperties;
-    itemRender?: (colName: string, item: TRec) => string | Element | JSX.Element;
+    itemStyle?: (colName: string, item: T) => React.CSSProperties;
+    itemRender?: (colName: string, item: T) => string | Element | JSX.Element;
+    itemClass?: (colName: string, item: T) => string;
 }
 
 const createHeader = function <TProps>({columns}: TableConfig<TProps>) {
@@ -25,16 +26,20 @@ const createHeader = function <TProps>({columns}: TableConfig<TProps>) {
 }
 
 const createRows = function <T>(items, tableProps: TableConfig<T>) {
-    const createRow = function <T>(item: any, {columns, itemStyle, itemRender}: TableConfig<T>) {
+    const createRow = function <T>(item: any, {columns, itemStyle, itemRender, itemClass}: TableConfig<T>) {
         return columns.map((col, i) => {
             let itemRendered = itemRender && itemRender(col.name, item);
             if (!itemRendered) itemRendered = item[col.name];
             let itemStyled = itemStyle && itemStyle(col.name, item);
             if (!itemStyled) itemStyled = {};
+            let itemClasses = itemClass && itemClass(col.name, item);
+            if (!itemClasses) itemClasses = '';
             return (
                 <td
                     key={i}
-                    style={itemStyled}>{itemRendered}
+                    className={itemClasses}
+                    style={itemStyled}>
+                    {itemRendered}
                 </td>
             )
         }
