@@ -98,9 +98,9 @@ function localSearch(search, location: string = 'milan, it', pageIndex: number, 
     const url = "https://query.yahooapis.com/v1/public/yql?q=" + encodeURIComponent( actualQuery ) + '&format=json'
 
     return fetch(url).then(res => res.json()).then(res => {
-        const rows =Array.isArray(res.query.results.Result) ? res.query.results.Result : res.query.results;
- 
+        if ( !res.query.results) return [];
 
+        const rows =  Array.isArray(res.query.results.Result) ? res.query.results.Result : res.query.results;
         return Object.keys(rows).map(key => rows[key] as QueryItem);
     });
 }
