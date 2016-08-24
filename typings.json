@@ -8,6 +8,7 @@
     "node": "registry:dt/node#6.0.0+20160720070758",
     "react": "registry:dt/react#0.14.0+20160805125551",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160728054947",
+    "react-bootstrap-table": "registry:dt/react-bootstrap-table#2.3.0+20160726193956",
     "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160728142841"
   }
 }

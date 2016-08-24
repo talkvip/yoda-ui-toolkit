@@ -39,8 +39,8 @@ const createColumn = (column: ColumnDefinition | string, index: number, {itemRen
             hidden={col.hidden || false}
             isKey={col.isKey || false}
             dataField={col.name}
-            dataFormat={ (cell, row) => itemRender(col.name, row) || cell }
-            columnClassName = {(cell, row) => itemClass(col.name, row) }
+            dataFormat={ (cell, row) => (itemRender && itemRender(col.name, row)) || cell }
+            columnClassName = {(cell, row) => itemClass && itemClass(col.name, row) }
             >
             {col.caption}
         </TableHeaderColumn>
@@ -56,7 +56,8 @@ const table = (props: TableProps<any>) => {
             onSizePerPageList: props.pageSizeChange,
             paginationShowsTotal: true,
             sizePerPageList: [10, 20],
-            sizePerPage: props.pageSize
+            sizePerPage: props.pageSize,
+            page: props.pageIndex
         }
     }
 

@@ -18,11 +18,12 @@
     "tsapp-scripts": "0.1.18"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0",
     "react-addons-css-transition-group": "^15.3.0",
     "react-bootstrap": "^0.30.2",
-    "bootstrap": "^3.3.7"
+    "react-bootstrap-table": "^2.4.3",
+    "react-dom": "^15.3.0"
   },
   "scripts": {
     "start": "rimraf dist && tsapp-scripts start",
