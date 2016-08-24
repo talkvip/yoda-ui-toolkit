@@ -1,5 +1,9 @@
-# yoda-ui-toolkit [![npm version](https://img.shields.io/npm/v/yoda-ui-toolkit.svg?style=flat)](https://www.npmjs.com/package/yoda-ui-toolkit) 
+# yoda-ui-toolkit 
 Collection of reusable react ui components
+
+[![npm version](https://img.shields.io/npm/v/yoda-ui-toolkit.svg?style=flat)](https://www.npmjs.com/package/yoda-ui-toolkit) 
+
+[![dependency](https://david-dm.org/vgmr/yoda-ui-toolkit/status.svg)](https://david-dm.org/vgmr/yoda-ui-toolkit) [![devDep](https://david-dm.org/vgmr/yoda-ui-toolkit/dev-status.svg)](https://david-dm.org/vgmr/yoda-ui-toolkit?type=dev)
 
 ## install
 
