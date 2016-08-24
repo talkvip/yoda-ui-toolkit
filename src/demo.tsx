@@ -24,7 +24,7 @@ class Menu extends React.Component<any,any> {
     }
     render () {
         return <div style={{padding:'50px'}}>
-            <h1>yoda-ui-kit demo {this.state.current && `: ${this.state.current.title}`}
+            <h1>yoda-ui-toolkit demo {this.state.current && `: ${this.state.current.title}`}
             </h1>
             {this.state.current ? <a onClick={()=>this.onChange(null)}>home</a> :
             <ul>
