@@ -1,6 +1,10 @@
 {
   "name": "yoda-ui-toolkit",
+<<<<<<< HEAD
   "version": "0.0.5",
+=======
+  "version": "0.0.6",
+>>>>>>> ee3e863394b9b20685c5aba864a6f7903b73c79e
   "description": "Collection of reusable react ui components",
   "repository": "https://github.com/vgmr/yoda-ui-toolkit/",
   "private": false,
