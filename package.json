@@ -1,6 +1,6 @@
 {
   "name": "yoda-ui-toolkit",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Collection of reusable react ui components",
   "repository": "https://github.com/vgmr/yoda-ui-toolkit/",
   "private": false,
@@ -13,6 +13,7 @@
     "babel-cli": "^6.11.4",
     "babel-plugin-transform-es2015-parameters": "^6.11.4",
     "babel-plugin-transform-object-assign": "^6.8.0",
+    "glob-cp": "^1.0.4",
     "react-test-renderer": "^15.3.0",
     "rimraf": "^2.5.4",
     "tsapp-scripts": "0.1.18"
@@ -28,7 +29,7 @@
   "scripts": {
     "start": "rimraf dist && tsapp-scripts start",
     "release": "npm run build && npm version patch && npm publish",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && node copycss.js",
     "postbuild": "babel dist -d dist",
     "test": "rimraf dist && tsapp-scripts test",
     "test:watch": "npm run -s test & npm run -s test --  --u --watch --onlyChanged"
