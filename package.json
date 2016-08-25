@@ -13,7 +13,6 @@
     "babel-cli": "^6.11.4",
     "babel-plugin-transform-es2015-parameters": "^6.11.4",
     "babel-plugin-transform-object-assign": "^6.8.0",
-    "glob-copy": "^0.1.0",
     "glob-cp": "^1.0.4",
     "react-test-renderer": "^15.3.0",
     "rimraf": "^2.5.4",
