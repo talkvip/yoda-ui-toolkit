@@ -23,10 +23,9 @@ export interface TableConfig<T> {
 }
 
 export interface TableProps<T> extends TableConfig<T> {
-    paging?: boolean,
     pageIndex?: number,
-    dataSize?: number,
     pageSize?: number,
+    dataSize?: number,
     showTotal?: boolean | ((start: number, to: number, dataSize: number) => any),
     sortName?: string,
     sortOrder?: SortOrder,
@@ -58,7 +57,7 @@ const columnProps = (column: ColumnDefinition | string, {itemRender, itemClass}:
 const table = (tableProps: TableProps<any>) => {
     let options: Options = undefined;
     const sorting = !!tableProps.sortChange;
-    const paging = tableProps.paging;
+    const paging = tableProps.pageSize != 0;
 
     if (tableProps.items && tableProps.items.length) {
         options = {

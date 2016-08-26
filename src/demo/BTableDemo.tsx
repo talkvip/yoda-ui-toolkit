@@ -92,20 +92,22 @@ class Demo extends React.Component<any, DemoState> {
 
     render() {
         const props: TableProps<SampleRow> = {
-            paging: true,
             columns: [{ name: 'col1', isKey: true }, 'col2', { name: 'col3', caption: 'numeri', sortable: true }, 'col4'],
+
+            items: this.state.items,
+            sortName: this.state.sortName,
+            sortOrder: this.state.sortOrder,
             pageIndex: this.state.pageIndex,
             pageSize: this.state.pageSize,
+
+            sortChange: this.sortChange,
             pageChange: this.pageChange,
             pageSizeChange: this.pageSizeChange,
             showTotal: (start, to, total) => <span>[{start}-{to}]- Total: {total}</span>,
             dataSize: allItems.length,
-            items: this.state.items,
+            
             itemRender: (name, row) => name === 'col1' ? ('customized_' + row[name]) : undefined,
             rowClick: (row) => alert(`clicked: ${row.col1} - ${row.col2}`),
-            sortName: this.state.sortName,
-            sortOrder: this.state.sortOrder,
-            sortChange: this.sortChange,
         }
         return <div>
             {this.state.loading && <Spinner/>}
