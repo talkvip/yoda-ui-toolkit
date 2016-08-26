@@ -17,8 +17,7 @@ export interface TableConfig<T> {
     itemRender?: (colName: string, item: T) => string | React.ReactElement<any>;
     itemClass?: (colName: string, item: T) => string;
     rowClick?: (item: T) => void
-    pageChange?: (page: number) => void,
-    pageSizeChange?: (pageSize: number) => void,
+    pageChange?: (pageIndex: number, pageSize: number) => void,
     sortChange?: (sortName: string, sortOrder: SortOrder) => void
 }
 
@@ -66,7 +65,6 @@ const table = (tableProps: TableProps<any>) => {
             sortName: sorting ? tableProps.sortName : undefined,
             sortOrder: sorting ? tableProps.sortOrder : undefined,
             onPageChange: paging ? tableProps.pageChange : undefined,
-            onSizePerPageList: paging ? tableProps.pageSizeChange : undefined,
             paginationShowsTotal: tableProps.showTotal as any,
             sizePerPageList: paging ? [10, 20] : [],
             sizePerPage: tableProps.pageSize,

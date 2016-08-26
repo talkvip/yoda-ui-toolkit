@@ -45,10 +45,11 @@ class Demo extends React.Component<any, DemoState> {
 
     private getPage = (items) => items.slice((this.state.pageIndex - 1) * this.state.pageSize, (this.state.pageIndex - 1) * this.state.pageSize + this.state.pageSize);
 
-    private pageChange = (page: number) => {
+    private pageChange = (pageIndex: number, pageSize: number) => {
         this.setState({
             loading: true,
-            pageIndex: page
+            pageIndex,
+            pageSize
         }, () => {
             setTimeout(() => {
                 this.setState({
@@ -62,7 +63,7 @@ class Demo extends React.Component<any, DemoState> {
     private pageSizeChange = (pageSize: number) => {
         this.setState({
             loading: true,
-            pageSize: pageSize
+            pageSize
         }, () => {
             setTimeout(() => {
                 this.setState({
@@ -99,13 +100,13 @@ class Demo extends React.Component<any, DemoState> {
             sortOrder: this.state.sortOrder,
             pageIndex: this.state.pageIndex,
             pageSize: this.state.pageSize,
+            dataSize: allItems.length,
 
             sortChange: this.sortChange,
             pageChange: this.pageChange,
-            pageSizeChange: this.pageSizeChange,
             showTotal: (start, to, total) => <span>[{start}-{to}]- Total: {total}</span>,
-            dataSize: allItems.length,
-            
+
+
             itemRender: (name, row) => name === 'col1' ? ('customized_' + row[name]) : undefined,
             rowClick: (row) => alert(`clicked: ${row.col1} - ${row.col2}`),
         }
