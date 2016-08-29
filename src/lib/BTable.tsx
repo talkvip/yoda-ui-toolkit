@@ -9,7 +9,9 @@ export interface ColumnDefinition {
     caption?: string,
     hidden?: boolean,
     isKey?: boolean,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: string,
+    align?: 'left' | 'center' | 'right' | 'start' | 'end'
 }
 
 export interface TableConfig<T> {
@@ -17,7 +19,7 @@ export interface TableConfig<T> {
     itemRender?: (colName: string, item: T) => string | React.ReactElement<any>;
     itemClass?: (colName: string, item: T) => string;
     rowClick?: (item: T) => void
-    pageChange?: (pageIndex: number, pageSize: number) => void,
+    pageChange?: (page: number, pageSize: number) => void,
     sortChange?: (sortName: string, sortOrder: SortOrder) => void
 }
 
@@ -45,6 +47,8 @@ const columnProps = (column: ColumnDefinition | string, {itemRender, itemClass}:
         {
             hidden: col.hidden || false,
             isKey: col.isKey || false,
+            width: col.width,
+            dataAlign: col.align,
             dataField: col.name,
             dataSort: col.sortable || false,
             dataFormat: (cell, row) => (itemRender && itemRender(col.name, row)) || cell,
@@ -56,7 +60,7 @@ const columnProps = (column: ColumnDefinition | string, {itemRender, itemClass}:
 const table = (tableProps: TableProps<any>) => {
     let options: Options = undefined;
     const sorting = !!tableProps.sortChange;
-    const paging = tableProps.pageSize != 0;
+    const paging = !!tableProps.pageSize;
 
     if (tableProps.items && tableProps.items.length) {
         options = {
@@ -66,7 +70,7 @@ const table = (tableProps: TableProps<any>) => {
             sortOrder: sorting ? tableProps.sortOrder : undefined,
             onPageChange: paging ? tableProps.pageChange : undefined,
             paginationShowsTotal: tableProps.showTotal as any,
-            sizePerPageList: paging ? [10, 20] : [],
+            sizePerPageList: paging ? [10, 25, 50, 100] : [],
             sizePerPage: tableProps.pageSize,
             page: tableProps.pageIndex,
         }
