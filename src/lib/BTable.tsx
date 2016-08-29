@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { BootstrapTable, Options, TableHeaderColumn } from 'react-bootstrap-table';
+import { BootstrapTable, Options, TableHeaderColumn, SortOrder as RSortOrder, DataAlignType } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
-export type SortOrder = 'asc' | 'desc';
+export type SortOrder = RSortOrder;
+export type Align = DataAlignType;
 
 export interface ColumnDefinition {
     name: string,
@@ -11,7 +12,7 @@ export interface ColumnDefinition {
     isKey?: boolean,
     sortable?: boolean,
     width?: string,
-    align?: 'left' | 'center' | 'right' | 'start' | 'end'
+    align?: Align
 }
 
 export interface TableConfig<T> {
