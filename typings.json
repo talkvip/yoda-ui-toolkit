@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160723033700",
     "react-dom": "registry:npm/react-dom#15.0.1+20160705210405"
   },
   "globalDependencies": {
@@ -7,6 +8,7 @@
     "jest": "registry:dt/jest#0.9.0+20160706021812",
     "node": "registry:dt/node#6.0.0+20160720070758",
     "react": "registry:dt/react#0.14.0+20160805125551",
+    "react-addons-shallow-compare": "registry:dt/react-addons-shallow-compare#0.14.0+20160709044614",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160728054947",
     "react-bootstrap-table": "registry:dt/react-bootstrap-table#2.3.0+20160726193956",
     "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160728142841"

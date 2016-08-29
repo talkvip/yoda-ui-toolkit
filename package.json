@@ -1,6 +1,6 @@
 {
   "name": "yoda-ui-toolkit",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Collection of reusable react ui components",
   "repository": "https://github.com/vgmr/yoda-ui-toolkit/",
   "private": false,
@@ -13,7 +13,6 @@
     "babel-cli": "^6.11.4",
     "babel-plugin-transform-es2015-parameters": "^6.11.4",
     "babel-plugin-transform-object-assign": "^6.8.0",
-    "glob-copy": "^0.1.0",
     "glob-cp": "^1.0.4",
     "react-test-renderer": "^15.3.0",
     "rimraf": "^2.5.4",
@@ -21,11 +20,15 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "lodash": "^4.15.0",
     "react": "^15.3.0",
     "react-addons-css-transition-group": "^15.3.0",
+    "react-addons-shallow-compare": "^15.3.1",
     "react-bootstrap": "^0.30.2",
     "react-bootstrap-table": "^2.4.3",
-    "react-dom": "^15.3.0"
+    "react-dom": "^15.3.0",
+    "react-redux": "^4.4.5",
+    "redux-helper": "0.0.41"
   },
   "scripts": {
     "start": "rimraf dist && tsapp-scripts start",

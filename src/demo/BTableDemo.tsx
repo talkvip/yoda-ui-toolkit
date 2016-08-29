@@ -1,35 +1,60 @@
 import * as React from 'react';
-import Table, {TableProps, ColumnDefinition} from '../lib/BTable';
+import Table, {TableProps, ColumnDefinition, SortOrder} from '../lib/BTable';
 import Spinner from '../lib/Spinner';
 
 const PAGE_SIZE = 10;
 
-let items = [];
-for (let i = 0; i < 100; i++) {
-    items.push({ col1: `col1_${i}`, col2: `col2_${i}` })
+let allItems: SampleRow[] = [];
+for (let i = 0; i < 1000; i++) {
+    allItems.push(
+        {
+            col1: `col1_${i}`,
+            col2: `col2_${i}`,
+            col3: Math.round((Math.random() * 100)),
+            col4: `another col_${i}`
+        })
 }
 
-class Demo extends React.Component<any, any> {
+export interface DemoState {
+    loading?: boolean,
+    pageIndex?: number,
+    pageSize?: number,
+    sortName?: string,
+    sortOrder?: SortOrder,
+    items?: SampleRow[]
+}
+
+export interface SampleRow {
+    col1: string,
+    col2: string,
+    col3: number,
+    col4: string
+}
+
+class Demo extends React.Component<any, DemoState> {
 
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
-            activePage: 1,
+            pageIndex: 1,
             pageSize: PAGE_SIZE,
-            items: items.slice(1, PAGE_SIZE)
+            items: allItems.slice(1, PAGE_SIZE)
         }
     }
 
-    private pageChange = (page: number) => {
+    private getPage = (items) => items.slice((this.state.pageIndex - 1) * this.state.pageSize, (this.state.pageIndex - 1) * this.state.pageSize + this.state.pageSize);
+
+    private pageChange = (pageIndex: number, pageSize: number) => {
         this.setState({
             loading: true,
-            activePage: page
+            pageIndex,
+            pageSize
         }, () => {
             setTimeout(() => {
                 this.setState({
                     loading: false,
-                    items: items.slice((page - 1) * this.state.pageSize, (page - 1) * this.state.pageSize + this.state.pageSize)
+                    items: this.getPage(allItems)
                 })
             }, 500)
         });
@@ -38,28 +63,52 @@ class Demo extends React.Component<any, any> {
     private pageSizeChange = (pageSize: number) => {
         this.setState({
             loading: true,
-            pageSize: pageSize
+            pageSize
         }, () => {
             setTimeout(() => {
                 this.setState({
                     loading: false,
-                    items: items.slice((this.state.page - 1) * this.state.pageSize, (this.state.page - 1) * this.state.pageSize + this.state.pageSize)
+                    items: this.getPage(allItems)
+                })
+            }, 500)
+        });
+    }
+
+    private sortChange = (sortName: string, sortOrder: SortOrder) => {
+        this.setState({
+            loading: true,
+            sortName,
+            sortOrder
+        }, () => {
+            setTimeout(() => {
+                const op = (sortOrder === 'asc') ? 1 : -1;
+                const ordered = allItems.sort((a, b) => a[sortName] > b[sortName] ? op : (op * -1));
+                this.setState({
+                    loading: false,
+                    items: this.getPage(ordered)
                 })
             }, 500)
         });
     }
 
     render() {
+        const props: TableProps<SampleRow> = {
+            columns: [{ name: 'col1', isKey: true }, 'col2', { name: 'col3', caption: 'numeri', sortable: true }, 'col4'],
 
-        const props: TableProps<any> = {
-            enablePaging: true,
-            pageIndex: this.state.activePage,
-            columns: [{ name: 'col1', isKey: true }, 'col2'],
             items: this.state.items,
+            sortName: this.state.sortName,
+            sortOrder: this.state.sortOrder,
+            pageIndex: this.state.pageIndex,
             pageSize: this.state.pageSize,
+            dataSize: allItems.length,
+
+            sortChange: this.sortChange,
             pageChange: this.pageChange,
-            dataSize: items.length,
-            pageSizeChange: this.pageSizeChange
+            showTotal: (start, to, total) => <span>[{start}-{to}]- Total: {total}</span>,
+
+
+            itemRender: (name, row) => name === 'col1' ? ('customized_' + row[name]) : undefined,
+            rowClick: (row) => alert(`clicked: ${row.col1} - ${row.col2}`),
         }
         return <div>
             {this.state.loading && <Spinner/>}
