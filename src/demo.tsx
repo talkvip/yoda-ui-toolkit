@@ -3,6 +3,8 @@ import {Button, Navbar} from './lib';
 import TableDemoAjax from './demo/TableDemoAjax';
 import TableDemo from './demo/TableDemo';
 import BTableDemo from './demo/BTableDemo';
+import GridDemo from './demo/GridDemo';
+
 
 
 
@@ -10,6 +12,7 @@ const data = [
     { title: 'Table', component: <TableDemo/> },
     { title: 'BTable', component: <BTableDemo/> },
     { title: 'AjaxTable', component: <TableDemoAjax/> },
+    {title:'Grid',component:<GridDemo/> }
 ]
 
 
