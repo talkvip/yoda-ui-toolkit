@@ -1,37 +1,79 @@
 import * as React from 'react';
 import {YodaGrid, YodaGridRow, YodaGridColumn}  from '../lib/Grid';
-import {FormControl}  from 'react-bootstrap'
+import {FormControl, Row}  from 'react-bootstrap'
 
-let items =  () => { let tmp = []; for (let i = 1; i < 1000; i++)  tmp.push({ id: `${i}`, name: `name_${i}` }); return tmp }
+let logo = require('../logo.svg');
 
-export default class GridDemo extends React.Component<any, any>{
+export interface TestUiDemo1Props {
+    id?: any;
+    name?: any,
+    date?: any
+}
+export interface TestUiDemo2Props {
+    item?: any;
+}
+
+const TestUIDemo1 = (props: TestUiDemo1Props) => {
+    return <div style={{ border: "1px solid" }}>
+        <div>name: {props.name}</div>
+        <div>date: {props.date}</div>
+    </div>
+}
+const TestUIDemo2 = (props: TestUiDemo2Props) => {
+    return <div style={{ border: "1px solid" }}>
+        <div>name: {props.item.name}</div>
+        <div>date: {props.item.date}</div>
+    </div>
+}
+
+
+export default class GridDemo extends React.Component<any, { items?: any[], multiselect?: boolean }>{
+    private  input:HTMLInputElement;
+
+    constructor(props) {
+        super(props);
+        this.state  = {items : this.createItems(10), multiselect:false}
+    }
+
+    createItems(num: number) {
+        let tmp = []; for (let i = 0; i < num; i++)  tmp.push({ id: `${i}`, name: `name_${i}`, date: "2015-02-02" }); 
+        return tmp
+    }
+
+    private onCreateClick = (e:Event) =>{
+
+        if (this.input.value)  {
+            this.setState({items: this.createItems(parseInt(this.input.value) )});
+        }
+    }
+    private onMultiselectClick = (e:Event) =>{
+            this.setState({multiselect: !this.state.multiselect});
+    }
+
     render() {
         return <div>
-            <h1>Div Demo</h1>
-            <YodaGrid items={items()} multiselect={false}>
-                <YodaGridColumn md={1} sm={2}  xsHidden dataField= "id"/>
-                <YodaGridColumn md={2} sm={2}  xsHidden dataField= "name" />
-
-                <YodaGridColumn md={2} sm={2} xs={12} dataField= "id"  mapDataToProps="defaultValue">
+            <input type='number' defaultValue={this.state.items.length}  ref = {e=> this.input = e}/>
+            <button onClick={this.onCreateClick}>create test rows</button>
+            { "   " }
+            <button onClick={this.onMultiselectClick}>multiselect {this.state.multiselect ? "on" : "off" }</button>
+            <hr/>
+            <YodaGrid items={this.state.items} multiselect={this.state.multiselect}>
+                <YodaGridColumn md={1} sm={1}  xsHidden><img src={logo}/></YodaGridColumn>
+                <YodaGridColumn md={1} sm={1}  xsHidden dataField= "id"/>
+                <YodaGridColumn md={1} sm={1}  xsHidden dataField= "name" />
+                <YodaGridColumn md={2} sm={2}  dataField= "name" mapDataToProps="defaultValue">
                     <FormControl type='text' />
                 </YodaGridColumn>
-                <YodaGridColumn md={2} sm={2} xs={6} dataField= "name" mapDataToProps={(item) => { return { defaultValue: item } } }>
-                    <FormControl type='text'/>
+                <YodaGridColumn md={3} sm={3}  dataField= "date" mapDataToProps={(item) => { return { defaultValue: item, type: "date" } } }>
+                    <FormControl />
                 </YodaGridColumn>
-
-                <YodaGridColumn md={2} sm={2} xs={6} mapDataToProps={(item) => { return { defaultValue: item.name } } }>
-                    <FormControl  type='text'/>
+                <YodaGridColumn md={2} sm={2} mapDataToProps="...">
+                    <TestUIDemo1 />
                 </YodaGridColumn>
-
-                <YodaGridColumn md={2} sm={4} xs={12} mapDataToProps={(item) => { return { type: item.name, defaultValue: item.name } } }>
-                    <FormControl type='text'/>
-                </YodaGridColumn>
-
-                <YodaGridColumn md={1} smHidden xsHidden mapDataToProps={(item) => { return { children: item.name } } }>
-                    <div style={{ background: "yellow" }}/>
+                <YodaGridColumn md={2} sm={2} mapDataToProps="item">
+                    <TestUIDemo2 />
                 </YodaGridColumn>
             </YodaGrid>
-
         </div>
     }
 }
