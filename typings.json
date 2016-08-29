@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "lodash": "registry:npm/lodash#4.0.0+20160723033700",
-    "react-dom": "registry:npm/react-dom#15.0.1+20160705210405"
+    "react-dom": "registry:npm/react-dom#15.0.1+20160705210405",
+    "react-redux": "registry:npm/react-redux#4.4.0+20160614222153"
   },
   "globalDependencies": {
     "expect": "registry:global/expect#1.13.4+20160211003958",

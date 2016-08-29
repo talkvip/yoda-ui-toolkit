@@ -3,6 +3,8 @@ import {Button, Glyphicon, ButtonGroup, FormControl, ListGroup, ListGroupItem, O
 import {CreatePromiseAction, CreateAction} from 'redux-helper';
 import * as _ from 'lodash';
 
+const DEF_VISIBLE_ITEMS = 5;
+
 export interface IPropsFromState<T> {
     items?: T[];
     searchedText?: string;
@@ -19,11 +21,13 @@ export interface IProps<T> extends IPropsFromState<T>, IPropsFromDispatch {
     placeholder?: string;
     minCharacters?: number;
     value?: T;
+    visibleItems?: number;
 }
 
 export interface IState<T> {
     text: string,
     selectedIndex: number,
+    firstVisibleIndex: number,
     value: T
     searchItems: { [key: string]: T[] }
 }
@@ -34,6 +38,7 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
         this.state = {
             text: props.value ? this.display(props.value) : '',
             selectedIndex: 0,
+            firstVisibleIndex: 0,
             value: props.value,
             searchItems: {}
         };
@@ -49,7 +54,8 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
                 text: this.state.text,
                 selectedIndex: this.state.selectedIndex,
                 value: this.state.value,
-                searchItems: Object.assign({ [newProps.searchedText]: newProps.items }, this.state.searchItems)
+                searchItems: Object.assign({ [newProps.searchedText]: newProps.items }, this.state.searchItems),
+                firstVisibleIndex: this.state.firstVisibleIndex
             });
         }
     }
@@ -60,14 +66,21 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
         if (event.keyCode == 13) {
             event.preventDefault();
             this.onSelected();
-        } else if (event.keyCode == 38) {
+        } else if (event.keyCode == 38) { 
+            // Arrow Up
             event.preventDefault();
-            if (this.state.selectedIndex != 0)
-                this.setState(Object.assign({}, this.state, { selectedIndex: this.state.selectedIndex - 1 }))
+            if (this.state.selectedIndex != 0) {
+                const ix = this.state.selectedIndex -1;
+                const fi = Math.min (ix, this.state.firstVisibleIndex);
+                this.setState(Object.assign({}, this.state, { selectedIndex: ix, firstVisibleIndex: fi}))
+            }
         } else if (event.keyCode == 40) {
             event.preventDefault();
-            if (this.state.selectedIndex < (items.length - 1))
-                this.setState(Object.assign({}, this.state, { selectedIndex: this.state.selectedIndex + 1 }))
+            if (this.state.selectedIndex < (items.length - 1)) {
+                const ix = this.state.selectedIndex +1;
+                const fi = Math.max ((ix - (this.props.visibleItems ||DEF_VISIBLE_ITEMS) +1 ), this.state.firstVisibleIndex);
+                this.setState(Object.assign({}, this.state, { selectedIndex: ix, firstVisibleIndex: fi}))
+            }
         } else if (event.keyCode == 27) {
             this.onReset();
         }
@@ -80,7 +93,8 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
                 text: this.display(this.state.value),
                 value: this.state.value,
                 searchItems: {},
-                selectedIndex: 0
+                selectedIndex: 0,
+                firstVisibleIndex: 0
             }, () => {
                 if (this.props.onReset) {
                     this.props.onReset(this.props.value);
@@ -96,6 +110,7 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
             text: this.display(sel),
             value: sel,
             selectedIndex: 0,
+            firstVisibleIndex: 0,
             searchItems: this.state.searchItems
         }, () => {
             this.props.onSelected(sel);
@@ -106,6 +121,7 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
         this.setState({
             text: elm.target.value,
             selectedIndex: this.state.selectedIndex,
+            firstVisibleIndex: this.state.firstVisibleIndex,
             value: null,
             searchItems: this.state.searchItems
         }, () => {
@@ -129,21 +145,24 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
             value={this.state.text}
             onChange={this.onChange}/>;
 
+        const ix = this.state.firstVisibleIndex;
+        const cnt = this.props.visibleItems || DEF_VISIBLE_ITEMS;
         const list = items && (items.length > 0) && this.state.value == null ?
             <Popover id='pop'>
                 <ListGroup>
-                    {items.map((item, i) => (
-                        <ListGroupItem active={i == this.state.selectedIndex} key={i} onClick={
-                            () => this.onSelected(i)
-                        }>
-                            {this.display(item) }
-                        </ListGroupItem>
-                    )) }
+                    {items.slice(ix, ix + cnt)
+                        .map((item, i) => (
+                            <ListGroupItem active={ (i + ix) == this.state.selectedIndex} key={i} onClick={
+                                () => this.onSelected(i + ix)
+                            }>
+                                {this.display(item) }
+                            </ListGroupItem>
+                        )) }
                 </ListGroup>
-            </Popover> :<span id='test'/>
+            </Popover> : <span id='test'/>
 
         return <OverlayTrigger trigger="focus" placement="bottom" overlay={list}>
-                {input}
+            {input}
         </OverlayTrigger>
 
     }
