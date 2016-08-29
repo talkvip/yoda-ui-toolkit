@@ -1,30 +1,30 @@
 import * as React from 'react';
-import Search, {IProps} from './Search';
+import Search, {IProps as ISearchProps} from './Search';
 
 
 /**
  * Embed a search text in an anchor
  */
-export interface SearchAnchorState<T> {
+export interface IState<T> {
     value: T;
     isOpen: boolean;
 }
 
-export interface SearchAnchorProps<T> extends IProps<T> {
+export interface IProps<T> extends ISearchProps<T> {
     nullValueDisplay?: string;
 }
 
-export default class SearchAnchor<T> extends React.Component<SearchAnchorProps<T>, SearchAnchorState<T>>{
+export default class SearchAnchor<T> extends React.Component<IProps<T>, IState<T>>{
     constructor(props) {
         super(props);
         this.state = { value: null, isOpen: false }
     }
 
-    private toggleOpen = () => {
+    protected toggleOpen = () => {
         this.setState(Object.assign({}, this.state, { isOpen: true }))
     }
 
-    private onSelect = (item: T) => {
+    protected onSelect = (item: T) => {
         this.setState({
             value: item,
             isOpen: false
@@ -33,7 +33,7 @@ export default class SearchAnchor<T> extends React.Component<SearchAnchorProps<T
         });
     }
 
-    private handleReset = (item: T) => {
+    protected handleReset = (item: T) => {
         this.setState({
             value: item,
             isOpen: false

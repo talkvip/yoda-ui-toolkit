@@ -22,6 +22,8 @@ export interface IProps<T> extends IPropsFromState<T>, IPropsFromDispatch {
     minCharacters?: number;
     value?: T;
     visibleItems?: number;
+    clearAfterSelect?:boolean;
+    style?: React.CSSProperties;
 }
 
 export interface IState<T> {
@@ -46,7 +48,7 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
 
     private onSearchDebounced = _.debounce(this.props.onSearchAction, 300, { trailing: true });
 
-    private display = (item: T) => item ? this.props.displayItem(item) : '';
+    private display = (item: T) => (item !=null) ? this.props.displayItem(item) : '';
 
     componentWillReceiveProps(newProps: IProps<T>) {
         if (!this.state.searchItems[newProps.searchedText]) {
@@ -105,10 +107,11 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
 
     private onSelected = (ix: number = this.state.selectedIndex) => {
         const items = this.state.searchItems[this.state.text] || [];
+        const clear = this.props.clearAfterSelect || false;
         const sel = items[ix];
         this.setState({
-            text: this.display(sel),
-            value: sel,
+            text: clear ? '' : this.display(sel),
+            value: clear ? null :sel,
             selectedIndex: 0,
             firstVisibleIndex: 0,
             searchItems: this.state.searchItems
@@ -137,7 +140,7 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
 
     render() {
         const items = this.state.searchItems[this.state.text] || [];
-        const input = <FormControl placeholder={this.props.placeholder || 'Enter some text'}
+        const input = <FormControl  style={this.props.style} placeholder={this.props.placeholder || 'Enter some text'}
             autoFocus={true}
             onKeyDown={this.onKeyDown}
             onBlur = {this.onReset}

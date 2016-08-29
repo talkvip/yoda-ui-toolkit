@@ -9,6 +9,7 @@ import {Col, Row} from 'react-bootstrap';
 let Search = builder.createSearchTextBox(rs.getItemsFromState, rs.search, (item) => item.name);
 let ASearch = builder.createSearchAnchor(rs.getItemsFromState, rs.search, (item) => item.name);
 let BSearch = builder.createSearchButton(rs.getItemsFromState, rs.search, (item) => item.name);
+let MSearch = builder.createSearchMulti(rs.getItemsFromState, rs.search, (item) => item.name);
 
 export default class SearchDemo extends React.Component<any, any> {
     constructor(props) {
@@ -48,14 +49,21 @@ export default class SearchDemo extends React.Component<any, any> {
                 </div>
                 <div>
                     <Col xs={12} sm={4}>
-                        <pre>{JSON.stringify(this.state.msg1, null, 2) }</pre>
+                        <pre>{this.state.msg1.name }</pre>
                     </Col>
                     <Col xs={12} sm={4}>
-                        <pre>{JSON.stringify(this.state.msg2, null, 2) }</pre>
+                        <pre>{this.state.msg2.name }</pre>
                     </Col>
                     <Col xs={12} sm={4}>
-                        <pre>{JSON.stringify(this.state.msg3, null, 2) }</pre>
+                        <pre>{this.state.msg3.name }</pre>
                     </Col>
+                </div>
+                <div>
+                        <h4>Multi Search</h4>
+                        <MSearch onSelected={(e) => { this.setState({ msg3: e }) } }
+                            placeholder='type a country name (e.g. Italy)'
+                            minCharacters={1}
+                            nullValueDisplay='No Country Selected'/>
                 </div>
             </div>
         </Provider>

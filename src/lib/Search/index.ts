@@ -3,6 +3,7 @@ import {CreatePromiseAction} from 'redux-helper';
 import {connect} from 'react-redux';
 import SearchAnchor from './SearchAnchor';
 import SearchButton from './SearchButton';
+import SearchMulti from './SearchMulti';
 import * as React from 'react';
 
 type ValidType = React.ComponentClass<any> | React.StatelessComponent<any>;
@@ -37,3 +38,4 @@ export const createSearchAnchor = createCreator(SearchAnchor);
 
 export const createSearchButton = createCreator(SearchButton);
 
+export const createSearchMulti = createCreator(SearchMulti);
