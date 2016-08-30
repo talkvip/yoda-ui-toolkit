@@ -11,13 +11,14 @@ features like:
 wrap on react-bootstarp-typeahead
 
 > usage
+
 ```js
     import {Autocomplete} from 'yoda-ui-toolbox';
-
     <Autocomplete {...props}/>    
 ```
 
 ### Props
+
 Name | Type | Default | Description
 -----|------|---------|------------
 align | string | 'justify' | Specify menu alignment. The default value is `justify`, which makes the menu as wide as the input and truncates long values. Specifying `left` or `right` will align the menu to that side and the width will be determined by the length of menu item values.
