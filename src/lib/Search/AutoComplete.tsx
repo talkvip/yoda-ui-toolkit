@@ -103,9 +103,6 @@ export interface IAutoCompleteProps<T> {
      *  callback: Provides a hook for customized rendering of tokens when multiple selections are enabled.
      */    
     renderToken?: (option: T, onRemove: () => void) => JSX.Element;
-}
-
-export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IPropsFromDispatch {
     /**
      * boolean: restrict the actual search to only when the lenght of the searched text is equal
      * to the minLength. 
@@ -116,6 +113,10 @@ export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IP
      * number: milliseconds to use in order to debounce the actual search.
      */
     debounceTime?: number;
+
+}
+
+export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IPropsFromDispatch {
 }
 
 export interface IState<T> {
