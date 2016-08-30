@@ -8,17 +8,16 @@ let TH = require('react-bootstrap-typeahead').default;
 export interface IPropsFromState<T> {
     items?: T[];
     searchedText?: string;
-    displayItem?: (item: T) => string
 }
 
 export interface IPropsFromDispatch {
     onSearchAction?: CreatePromiseAction<string>
 }
 
-export interface IProps<T> extends IPropsFromState<T>, IPropsFromDispatch {
-    onChanged: (items:T[]) => void;
-    onBlur?: (event:Event)=>void;
-    defaultSelected?: T|T[];
+export interface IAutoCompleteProps<T> {
+    onChanged?: (items: T[]) => void;
+    onBlur?: (event: Event) => void;
+    defaultSelected?: T | T[];
     multiple?: boolean;
     disabled?: boolean;
     labelKey?: string;
@@ -26,17 +25,21 @@ export interface IProps<T> extends IPropsFromState<T>, IPropsFromDispatch {
     emptyLabel?: string;
     maxHeight?: number;
     maxResults?: number;
-    minLength?:number;
+    minLength?: number;
     name?: string;
     newSelectionPrefix?: string;
     paginate?: boolean;
     paginationText?: string;
-    renderMenuItemChildren?: (props:IProps<T>, option:T, index:number) => JSX.Element;
-    renderToken?:(option:T, onRemove:()=>void)=>any;
+    renderMenuItemChildren?: (props: IProps<T>, option: T, index: number) => JSX.Element;
+    renderToken?: (option: T, onRemove: () => void) => JSX.Element;
+}
+
+export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IPropsFromDispatch {
+
 }
 
 export interface IState<T> {
-    
+
 }
 
 
@@ -46,15 +49,15 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     render() {
-        const values = this.props.defaultSelected ? [].concat(this.props.defaultSelected) :[];
-        const items = (this.props.items||[]).concat(values);
+        const values = this.props.defaultSelected ? [].concat(this.props.defaultSelected) : [];
+        const items = (this.props.items || []).concat(values);
 
         const props = {
             multiple: this.props.multiple,
-            defaultSelected: this.props.defaultSelected  && [ ].concat(this.props.defaultSelected),
+            defaultSelected: this.props.defaultSelected && [].concat(this.props.defaultSelected),
             onInputChange: this.props.onSearchAction,
             options: items,
-            labelKey:this.props.labelKey,
+            labelKey: this.props.labelKey,
             disabled: this.props.disabled,
             placeholder: this.props.placeholder,
             onChange: this.props.onChanged,
