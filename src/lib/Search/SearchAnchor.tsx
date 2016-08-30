@@ -1,17 +1,17 @@
 import * as React from 'react';
-import Search, {IProps as ISearchProps} from './Search';
+import Search, {IProps as ISearchProps} from './Typeahead';
 
 
 /**
  * Embed a search text in an anchor
  */
 export interface IState<T> {
-    value: T;
+    value: T[];
     isOpen: boolean;
 }
 
 export interface IProps<T> extends ISearchProps<T> {
-    nullValueDisplay?: string;
+
 }
 
 export default class SearchAnchor<T> extends React.Component<IProps<T>, IState<T>>{
@@ -24,29 +24,36 @@ export default class SearchAnchor<T> extends React.Component<IProps<T>, IState<T
         this.setState(Object.assign({}, this.state, { isOpen: true }))
     }
 
-    protected onSelect = (item: T) => {
+    protected onChanged = (item: T[]) => {
         this.setState({
             value: item,
-            isOpen: false
+            isOpen: true
         }, () => {
-            this.props.onSelected(item);
+            console.log('value',this.state.value);
+            this.props.onChanged(item);
         });
     }
 
-    protected handleReset = (item: T) => {
+    protected onBlur = (event:Event) => {
+        setTimeout(() => {
         this.setState({
-            value: item,
+            value: this.state.value,
             isOpen: false
         });
+        }, 300);
+    }
+
+    protected getCaption (){
+        return  this.state.value && this.state.value.length && this.state.value.length > 0  
+                     ? this.state.value.map(this.props.displayItem).join(', ') 
+                     : this.props.emptyLabel || 'No value';
     }
 
     render() {
         if (this.state.isOpen) {
-            const searchProps = Object.assign({}, this.props, { onSelected: this.onSelect, value: this.state.value });
-            return <Search {...searchProps as any} onReset={this.handleReset as any}/>
+            const searchProps = Object.assign({}, this.props, { onChanged: this.onChanged, defaultSelected: this.state.value });
+            return <Search {...searchProps as any} onBlur={this.onBlur as any}/>
         }
-        return <a style={{ cursor: 'pointer' }} onClick={this.toggleOpen}>
-            {!this.state.value ? this.props.nullValueDisplay || 'No value' : this.props.displayItem(this.state.value) }
-        </a>
+        return <a style={{ cursor: 'pointer' }} onClick={this.toggleOpen}>{this.getCaption()}</a>
     }
 }

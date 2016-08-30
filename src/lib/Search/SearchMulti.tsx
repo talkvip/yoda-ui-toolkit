@@ -54,7 +54,7 @@ export default class SearchMulti<T> extends React.Component<IProps<T>, IState<T>
 
     render() {
         const prevValues = this.state.value &&
-            this.state.value.map((item, i) => <Button
+            this.state.value.map((item, i) => <Button key={i}
                 style={{ marginRight: '1px' }}
                 onClick={(e) => { e.preventDefault(); this.removeValue(i) } }>
                     {this.props.displayItem(item) }

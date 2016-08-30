@@ -24,60 +24,59 @@ export default class SearchDemo extends React.Component<any, any> {
     render() {
         return <Provider store = {rs.default}>
             <div>
-                <h1>test</h1>
-                <div>
-                    <Col xs={12} sm={4}>
-                        <h4>Standard textbox search</h4>
-                        <Search onSelected={(e) => { this.setState({ msg1: e }) } }
-                            minCharacters={1}
-                            placeholder='type a country name (e.g. Italy)'/>
-                    </Col>
-                    <Col xs={12} sm={4}>
-                        <h4>Anchor search</h4>
-                        <ASearch onSelected={(e) => { this.setState({ msg2: e }) } }
-                            placeholder='type a country name (e.g. Italy)'
-                            minCharacters={1}
-                            nullValueDisplay='No Country Selected'/>
-                    </Col>
-                    <Col xs={12} sm={4}>
-                        <h4>Button search</h4>
-                        <BSearch onSelected={(e) => { this.setState({ msg3: e }) } }
-                            placeholder='type a country name (e.g. Italy)'
-                            minCharacters={1}
-                            nullValueDisplay='No Country Selected'/>
-                    </Col>
-                </div>
-                <div>
-                    <Col xs={12} sm={4}>
-                        {displaySelected(this.state.msg1) }
-                    </Col>
-                    <Col xs={12} sm={4}>
-                        {displaySelected(this.state.msg2) }
-                    </Col>
-                    <Col xs={12} sm={4}>
-                        {displaySelected(this.state.msg3) }
-                    </Col>
-                </div>
-                <div>
-                    <Col xs={12} sm={12}>
-                        <h4>Multi Search</h4>
-                        <MSearch onSelected={(e) => { this.setState({ msg4: e }) } }
-                            placeholder='type a country name (e.g. Italy)'
-                            minCharacters={1}
-                            nullValueDisplay='No Country Selected'/>
-                        </Col>
-                    <Col xs={12} sm={12}>
-                        {displaySelected(this.state.msg4) }
-                    </Col>
-                </div>
+                {[false,true].map((multi, ix) => (
+                    <div key={ix} >
+                        <h2 >{multi ? 'Multiple Selection':'Simple Selection'} </h2>
+                        <Row>
+                            <Col xs={12} sm={4}>
+                                <h4>Standard textbox search</h4>
+                                <Search onChanged={(e) => { this.setState({ ["msg1" + multi]: e }) } }
+                                    minLength={1}
+                                    multiple={multi}
+                                    labelKey='name'
+                                    placeholder='type a country name (e.g. Italy)'/>
+                            </Col>
+                            <Col xs={12} sm={4}>
+                                <h4>Anchor search</h4>
+                                <ASearch onChanged={(e) => { this.setState({ ["msg2" + multi]: e }) } }
+                                    placeholder='type a country name (e.g. Italy)'
+                                    minLength={1}
+                                    multiple={multi}
+                                    labelKey='name'
+                                    emptyLabel='No Country Selected'/>
+                            </Col>
+                            <Col xs={12} sm={4}>
+                                <h4>Button search</h4>
+                                <BSearch onChanged={(e) => { this.setState({ ["msg3" + multi]: e }) } }
+                                    placeholder='type a country name (e.g. Italy)'
+                                    minLength={1}
+                                    multiple={multi}
+                                    labelKey='name'
+                                    emptyLabel='No Country Selected'/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={12} sm={4}>
+                                {displaySelected(this.state["msg1" + multi]) }
+                            </Col>
+                            <Col xs={12} sm={4}>
+                                {displaySelected(this.state["msg2" + multi]) }
+                            </Col>
+                            <Col xs={12} sm={4}>
+                                {displaySelected(this.state["msg3" + multi]) }
+                            </Col>
+                        </Row>
+                        <Row style={{height:'50px',width:'100%'}}/>
+                    </div>
+                )) }
             </div>
         </Provider>
     }
 
 }
 
-function displaySelected (s){
-    return  s && 'you selected: ' + ([].concat(s)).map(p=>p.name).join(',');
+function displaySelected(s) {
+    return (s && s.length >0) && 'you selected: ' + ([].concat(s)).map(p => p.name).join(', ');
 }
 
 

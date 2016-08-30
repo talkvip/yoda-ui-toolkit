@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import SearchAnchor from './SearchAnchor';
 import SearchButton from './SearchButton';
 import SearchMulti from './SearchMulti';
+import Typeahead from './Typeahead';
 import * as React from 'react';
 
 type ValidType = React.ComponentClass<any> | React.StatelessComponent<any>;
@@ -32,10 +33,11 @@ const createCreator = <C extends ValidType>(compo: C) =>
     }
 
 
-export const createSearchTextBox = createCreator(Search);
+export const createSearchTextBox = createCreator(Typeahead);
 
 export const createSearchAnchor = createCreator(SearchAnchor);
 
 export const createSearchButton = createCreator(SearchButton);
 
 export const createSearchMulti = createCreator(SearchMulti);
+

@@ -169,6 +169,9 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
                                 {this.display(item) }
                             </ListGroupItem>
                         )) }
+                    {(ix + cnt) < items.length &&
+                        <ListGroupItem bsSize='xs' style={{fontStyle:'italic'}}>{items.length - (ix+cnt)} more</ListGroupItem>
+                    }
                 </ListGroup>
             </Popover> : <span id='test'/>
 
@@ -177,6 +180,16 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
         </OverlayTrigger>
 
     }
+
+
+
+
+
+
+
+
+
 }
+
 
 
