@@ -1,17 +1,11 @@
 import * as React from 'react';
 import {Button, Navbar} from './lib';
-import TableDemoAjax from './demo/TableDemoAjax';
-import TableDemo from './demo/TableDemo';
-import BTableDemo from './demo/BTableDemo';
 import GridDemo from './demo/GridDemo';
 import SearchDemo from './demo/SearchDemo';
 
 
 
 const data = [
-    { title: 'Table', component: <TableDemo/> },
-    { title: 'BTable', component: <BTableDemo/> },
-    { title: 'AjaxTable', component: <TableDemoAjax/> },
     { title: 'Grid', component: <GridDemo/> },
     {title: 'Search',component: <SearchDemo/>}
 ]
