@@ -2,7 +2,7 @@ import {CreatePromiseAction} from 'redux-helper';
 import {connect} from 'react-redux';
 import SearchAnchor from './SearchAnchor';
 import SearchButton from './SearchButton';
-import Typeahead,{IPropsFromDispatch,IPropsFromState} from './Typeahead';
+import AutoComplete,{IPropsFromDispatch,IPropsFromState} from './AutoComplete';
 import * as React from 'react';
 
 type ValidType = React.ComponentClass<any> | React.StatelessComponent<any>;
@@ -31,9 +31,10 @@ const createCreator = <C extends ValidType>(compo: C) =>
     }
 
 
-export const createSearchTextBox = createCreator(Typeahead);
+export const createSearchTextBox = createCreator(AutoComplete);
 
 export const createSearchAnchor = createCreator(SearchAnchor);
 
 export const createSearchButton = createCreator(SearchButton);
 
+export {AutoComplete}

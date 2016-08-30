@@ -40,7 +40,7 @@ export interface IState<T> {
 }
 
 
-export default class Typeahead<T> extends React.Component<IProps<T>, IState<T>> {
+export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T>> {
     constructor(props: IProps<T>) {
         super(props);
     }
