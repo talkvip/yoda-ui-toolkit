@@ -52,7 +52,7 @@ export default class SearchAnchor<T> extends React.Component<IProps<T>, IState<T
     render() {
         if (this.state.isOpen) {
             const searchProps = Object.assign({}, this.props, { onChanged: this.onChanged, defaultSelected: this.state.value });
-            return <Search {...searchProps as any} onBlur={this.onBlur as any}/>
+            return <Search  {...searchProps as any} onBlur={this.onBlur as any}/>
         }
         return <a style={{ cursor: 'pointer' }} onClick={this.toggleOpen}>{this.getCaption()}</a>
     }

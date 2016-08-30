@@ -36,3 +36,8 @@ npm test
 ```sh
 npm run release
 ```
+
+
+## documentation
+
+* [search](./docs/search.md)

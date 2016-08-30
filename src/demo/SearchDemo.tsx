@@ -32,6 +32,7 @@ export default class SearchDemo extends React.Component<any, any> {
     render() {
         return <Provider store = {rs.default}>
             <div>
+                <a href='http://github.com/vgmr/yoda-ui-toolkit/docs/search.md'>Documentation</a>
                 {[false, true].map((multi, ix) => (
                     <div key={ix} >
                         <h2 >{multi ? 'Multiple Selection' : 'Simple Selection'} </h2>
@@ -39,8 +40,9 @@ export default class SearchDemo extends React.Component<any, any> {
                             <Col xs={12} sm={4}>
                                 <h4>Standard textbox search</h4>
                                 <Search onChanged={(e) => { this.setState({ ["msg1" + multi]: e }) } }
-                                    minLength={1}
+                                    minLength={3}
                                     multiple={multi}
+                                    debounceTime={200}
                                     placeholder='type a country name (e.g. Italy)'/>
                             </Col>
                             <Col xs={12} sm={4}>

@@ -2,11 +2,10 @@ import {CreatePromiseAction} from 'redux-helper';
 import {connect} from 'react-redux';
 import SearchAnchor from './SearchAnchor';
 import SearchButton from './SearchButton';
-import AutoComplete, {IPropsFromDispatch, IPropsFromState,IAutoCompleteProps} from './AutoComplete';
+import AutoComplete, {IPropsFromDispatch, IPropsFromState, IAutoCompleteProps} from './AutoComplete';
 import * as React from 'react';
 
 type ValidType = React.ComponentClass<any> | React.StatelessComponent<any>;
-
 
 const createCreator = <C extends ValidType>(compo: C) =>
     <T, S>(
@@ -29,7 +28,6 @@ const createCreator = <C extends ValidType>(compo: C) =>
 
         return connect(mapStateToProps, mapDispatchToProps)(compo);
     }
-
 
 export const createSearchTextBox = createCreator(AutoComplete);
 
