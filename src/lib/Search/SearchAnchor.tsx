@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Search, {IProps as ISearchProps} from './Typeahead';
+import Search, {IProps as ISearchProps} from './AutoComplete';
 
 
 /**

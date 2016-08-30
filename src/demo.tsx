@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Button, Navbar} from './lib';
 import GridDemo from './demo/GridDemo';
 import SearchDemo from './demo/SearchDemo';
 
@@ -7,7 +6,7 @@ import SearchDemo from './demo/SearchDemo';
 
 const data = [
     { title: 'Grid', component: <GridDemo/> },
-    {title: 'Search',component: <SearchDemo/>}
+    { title: 'Search', component: <SearchDemo/> }
 ]
 
 
