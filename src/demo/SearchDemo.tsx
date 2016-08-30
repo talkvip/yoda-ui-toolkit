@@ -32,7 +32,7 @@ export default class SearchDemo extends React.Component<any, any> {
     render() {
         return <Provider store = {rs.default}>
             <div>
-                <a href='http://github.com/vgmr/yoda-ui-toolkit/docs/search.md'>Documentation</a>
+                <a href='http://github.com/vgmr/yoda-ui-toolkit/blob/master/docs/search.md'>Documentation</a>
                 {[false, true].map((multi, ix) => (
                     <div key={ix} >
                         <h2 >{multi ? 'Multiple Selection' : 'Simple Selection'} </h2>
