@@ -48,16 +48,18 @@ export default class SearchMulti<T> extends React.Component<IProps<T>, IState<T>
 
     protected removeValue = (ix: number) => {
         this.setState({
-            value: this.state.value.slice(0,ix).concat(this.state.value.slice(ix+1))
+            value: this.state.value.slice(0, ix).concat(this.state.value.slice(ix + 1))
         })
     }
 
     render() {
         const prevValues = this.state.value &&
-            this.state.value.map((item, i) => <Button onClick={(e) => { e.preventDefault(); this.removeValue(i) } }>
-                {this.props.displayItem(item) }
-                {' '}
-                <Glyphicon glyph='trash'/>
+            this.state.value.map((item, i) => <Button
+                style={{ marginRight: '1px' }}
+                onClick={(e) => { e.preventDefault(); this.removeValue(i) } }>
+                    {this.props.displayItem(item) }
+                    {' '}
+                    <Glyphicon glyph='remove'/>
             </Button>);
 
         const searchProps: IBaseSearchProps<T> = {
@@ -73,7 +75,7 @@ export default class SearchMulti<T> extends React.Component<IProps<T>, IState<T>
         }
         return <div>
             {prevValues}
-            <Search style={{display:'inline-block',width:'250px'}} {...searchProps as any} onReset={this.handleReset as any}/>
+            <Search style={{ display: 'inline-block', width: '250px' }} {...searchProps as any} onReset={this.handleReset as any}/>
         </div>
     }
 }

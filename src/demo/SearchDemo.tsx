@@ -49,21 +49,26 @@ export default class SearchDemo extends React.Component<any, any> {
                 </div>
                 <div>
                     <Col xs={12} sm={4}>
-                        <pre>{this.state.msg1.name }</pre>
+                        {displaySelected(this.state.msg1) }
                     </Col>
                     <Col xs={12} sm={4}>
-                        <pre>{this.state.msg2.name }</pre>
+                        {displaySelected(this.state.msg2) }
                     </Col>
                     <Col xs={12} sm={4}>
-                        <pre>{this.state.msg3.name }</pre>
+                        {displaySelected(this.state.msg3) }
                     </Col>
                 </div>
                 <div>
+                    <Col xs={12} sm={12}>
                         <h4>Multi Search</h4>
-                        <MSearch onSelected={(e) => { this.setState({ msg3: e }) } }
+                        <MSearch onSelected={(e) => { this.setState({ msg4: e }) } }
                             placeholder='type a country name (e.g. Italy)'
                             minCharacters={1}
                             nullValueDisplay='No Country Selected'/>
+                        </Col>
+                    <Col xs={12} sm={12}>
+                        {displaySelected(this.state.msg4) }
+                    </Col>
                 </div>
             </div>
         </Provider>
@@ -71,6 +76,9 @@ export default class SearchDemo extends React.Component<any, any> {
 
 }
 
+function displaySelected (s){
+    return  s && 'you selected: ' + ([].concat(s)).map(p=>p.name).join(',');
+}
 
 
 

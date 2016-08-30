@@ -22,7 +22,7 @@ export interface IProps<T> extends IPropsFromState<T>, IPropsFromDispatch {
     minCharacters?: number;
     value?: T;
     visibleItems?: number;
-    clearAfterSelect?:boolean;
+    clearAfterSelect?: boolean;
     style?: React.CSSProperties;
 }
 
@@ -48,7 +48,7 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
 
     private onSearchDebounced = _.debounce(this.props.onSearchAction, 300, { trailing: true });
 
-    private display = (item: T) => (item !=null) ? this.props.displayItem(item) : '';
+    private display = (item: T) => (item != null) ? this.props.displayItem(item) : '';
 
     componentWillReceiveProps(newProps: IProps<T>) {
         if (!this.state.searchItems[newProps.searchedText]) {
@@ -64,26 +64,32 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
 
     private onKeyDown = (event: KeyboardEvent) => {
         const items = this.state.searchItems[this.state.text] || [];
-        switch (event.keyCode) { }
+
         if (event.keyCode == 13) {
+            //Enter
             event.preventDefault();
             this.onSelected();
-        } else if (event.keyCode == 38) { 
+
+        } else if (event.keyCode == 38) {
             // Arrow Up
             event.preventDefault();
             if (this.state.selectedIndex != 0) {
-                const ix = this.state.selectedIndex -1;
-                const fi = Math.min (ix, this.state.firstVisibleIndex);
-                this.setState(Object.assign({}, this.state, { selectedIndex: ix, firstVisibleIndex: fi}))
+                const ix = this.state.selectedIndex - 1;
+                const fi = Math.min(ix, this.state.firstVisibleIndex);
+                this.setState(Object.assign({}, this.state, { selectedIndex: ix, firstVisibleIndex: fi }))
             }
+
         } else if (event.keyCode == 40) {
+            // Arrow Down
             event.preventDefault();
             if (this.state.selectedIndex < (items.length - 1)) {
-                const ix = this.state.selectedIndex +1;
-                const fi = Math.max ((ix - (this.props.visibleItems ||DEF_VISIBLE_ITEMS) +1 ), this.state.firstVisibleIndex);
-                this.setState(Object.assign({}, this.state, { selectedIndex: ix, firstVisibleIndex: fi}))
+                const ix = this.state.selectedIndex + 1;
+                const fi = Math.max((ix - (this.props.visibleItems || DEF_VISIBLE_ITEMS) + 1), this.state.firstVisibleIndex);
+                this.setState(Object.assign({}, this.state, { selectedIndex: ix, firstVisibleIndex: fi }))
             }
+
         } else if (event.keyCode == 27) {
+            // Esc
             this.onReset();
         }
     }
@@ -109,15 +115,17 @@ export default class Search<T> extends React.Component<IProps<T>, IState<T>> {
         const items = this.state.searchItems[this.state.text] || [];
         const clear = this.props.clearAfterSelect || false;
         const sel = items[ix];
-        this.setState({
-            text: clear ? '' : this.display(sel),
-            value: clear ? null :sel,
-            selectedIndex: 0,
-            firstVisibleIndex: 0,
-            searchItems: this.state.searchItems
-        }, () => {
-            this.props.onSelected(sel);
-        });;
+        if (sel) {
+            this.setState({
+                text: clear ? '' : this.display(sel),
+                value: clear ? null : sel,
+                selectedIndex: 0,
+                firstVisibleIndex: 0,
+                searchItems: this.state.searchItems
+            }, () => {
+                this.props.onSelected(sel);
+            });
+        }
     }
 
     private onChange = (elm) => {
