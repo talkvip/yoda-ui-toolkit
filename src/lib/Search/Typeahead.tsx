@@ -31,8 +31,8 @@ export interface IProps<T> extends IPropsFromState<T>, IPropsFromDispatch {
     newSelectionPrefix?: string;
     paginate?: boolean;
     paginationText?: string;
-    renderMenuItemChildren?: (item:T) => any;
-    renderToken?:(item:T)=>any;
+    renderMenuItemChildren?: (props:IProps<T>, option:T, index:number) => JSX.Element;
+    renderToken?:(option:T, onRemove:()=>void)=>any;
 }
 
 export interface IState<T> {
@@ -48,6 +48,7 @@ export default class Typeahead<T> extends React.Component<IProps<T>, IState<T>> 
     render() {
         const values = this.props.defaultSelected ? [].concat(this.props.defaultSelected) :[];
         const items = (this.props.items||[]).concat(values);
+
         const props = {
             multiple: this.props.multiple,
             defaultSelected: this.props.defaultSelected  && [ ].concat(this.props.defaultSelected),

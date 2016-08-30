@@ -1,10 +1,8 @@
-import Search, {IPropsFromState, IPropsFromDispatch} from './Search';
 import {CreatePromiseAction} from 'redux-helper';
 import {connect} from 'react-redux';
 import SearchAnchor from './SearchAnchor';
 import SearchButton from './SearchButton';
-import SearchMulti from './SearchMulti';
-import Typeahead from './Typeahead';
+import Typeahead,{IPropsFromDispatch,IPropsFromState} from './Typeahead';
 import * as React from 'react';
 
 type ValidType = React.ComponentClass<any> | React.StatelessComponent<any>;
@@ -38,6 +36,4 @@ export const createSearchTextBox = createCreator(Typeahead);
 export const createSearchAnchor = createCreator(SearchAnchor);
 
 export const createSearchButton = createCreator(SearchButton);
-
-export const createSearchMulti = createCreator(SearchMulti);
 

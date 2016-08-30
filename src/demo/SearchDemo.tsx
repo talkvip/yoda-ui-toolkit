@@ -9,7 +9,6 @@ import {Col, Row} from 'react-bootstrap';
 let Search = builder.createSearchTextBox(rs.getItemsFromState, rs.search, (item) => item.name);
 let ASearch = builder.createSearchAnchor(rs.getItemsFromState, rs.search, (item) => item.name);
 let BSearch = builder.createSearchButton(rs.getItemsFromState, rs.search, (item) => item.name);
-let MSearch = builder.createSearchMulti(rs.getItemsFromState, rs.search, (item) => item.name);
 
 export default class SearchDemo extends React.Component<any, any> {
     constructor(props) {
@@ -19,6 +18,11 @@ export default class SearchDemo extends React.Component<any, any> {
             msg2: '',
             msg3: ''
         }
+    }
+
+
+    private display = (props,ele,ix)=> {
+        return <span>{ele.name} ({ele.alpha3Code})</span>
     }
 
     render() {
@@ -34,6 +38,7 @@ export default class SearchDemo extends React.Component<any, any> {
                                     minLength={1}
                                     multiple={multi}
                                     labelKey='name'
+                                    renderMenuItemChildren = {this.display}
                                     placeholder='type a country name (e.g. Italy)'/>
                             </Col>
                             <Col xs={12} sm={4}>

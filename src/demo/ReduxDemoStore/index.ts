@@ -40,6 +40,14 @@ function localSearch(search: string, location: string = 'milan, it', pageIndex: 
 
     return (fetch(url).then(res => res.json()).catch(err => []))
         .then(res => {
+            if (!Array.isArray(res)) {
+                //ERROR - return empty result...
+                return {
+                    data:[],
+                    searchText:search
+                }
+            }
+
             return {
                 data: res as QueryItem[],
                 searchText: search
@@ -49,4 +57,6 @@ function localSearch(search: string, location: string = 'milan, it', pageIndex: 
 
 export interface QueryItem {
     name: string;
+    alpha3Code: string;
+
 }

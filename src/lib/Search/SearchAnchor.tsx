@@ -29,7 +29,6 @@ export default class SearchAnchor<T> extends React.Component<IProps<T>, IState<T
             value: item,
             isOpen: true
         }, () => {
-            console.log('value',this.state.value);
             this.props.onChanged(item);
         });
     }
