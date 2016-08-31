@@ -115,6 +115,7 @@ export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IP
 }
 
 export interface IState<T> {
+    selected: T[];
 }
 
 
@@ -130,6 +131,16 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
                            ? debounce(this.props.onSearchAction,this.props.debounceTime)
                            : this.props.onSearchAction
 
+        this.state = {
+            selected: props.defaultSelected ? [].concat(props.defaultSelected) :[] 
+        }
+    }
+    private onSelected = (selected:T[]) => {
+        this.setState({
+            selected: selected
+        }, ()=>{
+            this.props.onChanged && this.props.onChanged(selected);
+        });
     }
 
     private onInputChange = (text:string ) => {
@@ -141,20 +152,20 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     render() {
-        console.log('props', this.props);
+        console.log('props', this.props, 'state', this.state);
         const values = this.props.defaultSelected ? [].concat(this.props.defaultSelected) : [];
         const items = (this.props.items || []).concat(values);
 
         const props = {
             allowNew: this.props.allowNew,
             multiple: this.props.multiple,
-            defaultSelected: this.props.defaultSelected && [].concat(this.props.defaultSelected),
+            selected: this.state.selected, // this.props.defaultSelected && [].concat(this.props.defaultSelected),
             onInputChange: this.onInputChange,
             options: items,
             labelKey: this.props.labelKey,
             disabled: this.props.disabled,
             placeholder: this.props.placeholder,
-            onChange: this.props.onChanged,
+            onChange: this.onSelected,
             onBlur: this.props.onBlur,
             emtpyLabel: this.props.emptyLabel,
             maxHeight: this.props.maxHeight,
