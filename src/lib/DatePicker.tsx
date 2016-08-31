@@ -1,6 +1,7 @@
 import * as React from 'react';
-let InternalDatePicker = require("react-bootstrap-date-picker");
+import * as moment from 'moment';
 
+let InternalDatePicker = require("react-bootstrap-date-picker");
 export interface DatePickerProps {
     value?: string,
     cellPadding?: string,
@@ -9,7 +10,7 @@ export interface DatePickerProps {
     monthLabels?: string[],
     onChange?: (value)=>void,
     onClear?: ()=>void,
-    clearButtonElement?: string | JSX.Element,
+    clearButtonElement?: string | any,
     previousButtonElement?: string | JSX.Element,
     nextButtonElement?: string | JSX.Element,
     calendarPlacement?: string,
@@ -17,6 +18,9 @@ export interface DatePickerProps {
 }
 
 export const DatePicker = (props: DatePickerProps)  =>{
-    return <InternalDatePicker  {...props}
+
+    return <InternalDatePicker  {...props} value={props.value && moment(props.value).toISOString()}
     />
 }
+
+
