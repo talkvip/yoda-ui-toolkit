@@ -61,7 +61,7 @@ Create a TextBox autocomplete component connected to redux.
 
 Name | Type | Description
 -----|------|-----------
-select | function (state;S) =>[string,t[]] | redux selector that returns an array where the 1st element is the searched text and the 2ns is the data array
+select | function (state;S) =>T[] | redux selector that returns the options to display
 action | function | redux-helper promise action that needs to be dispatched on search.
 options | object | Autocomplete props
 
