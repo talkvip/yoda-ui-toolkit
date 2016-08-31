@@ -1,7 +1,7 @@
-import {SortOrder} from 'react-bootstrap-table';
+export type SortOrder = 'asc' | 'desc';
 
 /** Table properties */
-interface TableProps<T> {
+export interface TableProps<T> {
     items: T[]
 
     /** Paging */
@@ -15,5 +15,3 @@ interface TableProps<T> {
     sortOrder?: SortOrder,
     sortChange?: (sortName: string, sortOrder: SortOrder) => void
 }
-
- export default TableProps;
