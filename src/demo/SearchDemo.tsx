@@ -7,9 +7,11 @@ import {Provider} from 'react-redux';
 import {Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
-const SearchA =  connectedAutoCompleteTextBox(rs.getItemsFromState,rs.search);
-const SearchB =  connectedAutoCompleteButton(rs.getItemsFromState,rs.search);
-const SearchC =  connectedAutoCompleteAnchor(rs.getItemsFromState,rs.search);
+const SearchA =  connectedAutoCompleteTextBox(rs.getItemsFromState,rs.search,{labelKey:'name'});
+const SearchB =  connectedAutoCompleteButton(rs.getItemsFromState,rs.search, {labelKey:'name',
+    renderMenuItemChildren: (p,e,i) =><span>{e.name} ({e.alpha3Code})</span>
+});
+const SearchC =  connectedAutoCompleteAnchor(rs.getItemsFromState,rs.search, {labelKey:'name'});
 
 export default class SearchDemo extends React.Component<any, any> {
     constructor(props) {
@@ -38,7 +40,6 @@ export default class SearchDemo extends React.Component<any, any> {
                                 <h4>Standard textbox search</h4>
                                 <SearchA onChanged={(e) => { this.setState({ ["msg1" + multi]: e }) } }
                                     minLength={3}
-                                    labelKey='name'
                                     multiple={multi}
                                     debounceTime={200}
                                     placeholder='type a country name (e.g. Italy)'/>
@@ -49,7 +50,6 @@ export default class SearchDemo extends React.Component<any, any> {
                                     onChanged={(e) => { this.setState({ ["msg2" + multi]: e }) } }
                                     placeholder='type a country name (e.g. Italy)'
                                     minLength={1}
-                                    labelKey='name'
                                     multiple={multi}
                                     emptyLabel='No Country Selected'/>
                             </Col>
@@ -58,7 +58,6 @@ export default class SearchDemo extends React.Component<any, any> {
                                 <SearchC onChanged={(e) => { this.setState({ ["msg3" + multi]: e }) } }
                                     placeholder='type a country name (e.g. Italy)'
                                     minLength={1}
-                                    labelKey='name'
                                     multiple={multi}
                                     emptyLabel='No Country Selected'/>
                             </Col>

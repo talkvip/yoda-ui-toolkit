@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Search,{IProps} from './AutoComplete';
 import {Button} from 'react-bootstrap';
-import SearchAnchor from './SearchAnchor';
+import SearchAnchor from './AutoCompleteAnchor';
 
 export default class SearchButton<T> extends  SearchAnchor<T>{
 

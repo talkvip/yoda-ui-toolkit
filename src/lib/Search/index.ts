@@ -1,29 +1,27 @@
 import {CreatePromiseAction} from 'redux-helper';
 import {connect} from 'react-redux';
-import SearchAnchor from './SearchAnchor';
-import SearchButton from './SearchButton';
-import AutoComplete, {IPropsFromDispatch, IPropsFromState, IAutoCompleteProps, IProps} from './AutoComplete';
+import AutoCompleteAnchor from './AutoCompleteAnchor';
+import AutoCompleteButton from './AutoCompleteButton';
+import AutoComplete, {IAutoCompleteProps, IProps} from './AutoComplete';
 import * as React from 'react';
 
-export * from './AutoComplete';
-
-export function connectedAutoCompleteTextBox<T>(select:(s)=>T[],action: CreatePromiseAction<string>){
-    const mstp = (s) => ({items:select(s)});
-    const mdtp = {onSearchAction: action}
-    return connect(mstp,mdtp)(AutoComplete);
+export function connectedAutoCompleteTextBox<T>(select:(s)=>T[],action: CreatePromiseAction<string>,props?: IAutoCompleteProps<T>){
+    const mstp = (s) => (Object.assign({}, props, {items:select(s)}));
+    const mdtp = {onSearchAction: action};
+    return connect(mstp,mdtp)(AutoComplete)
 }
 
-export function connectedAutoCompleteAnchor<T>(select:(s)=>T[],action: CreatePromiseAction<string>){
-    const mstp = (s) => ({items:select(s)});
+export function connectedAutoCompleteAnchor<T>(select:(s)=>T[],action: CreatePromiseAction<string>,props?: IAutoCompleteProps<T>){
+    const mstp = (s) => (Object.assign({}, props, {items:select(s)}));
     const mdtp = {onSearchAction: action}
-    return connect(mstp,mdtp)(SearchAnchor);
+    return connect(mstp,mdtp)(AutoCompleteAnchor);
 }
 
-export function connectedAutoCompleteButton<T>(select:(s)=>T[],action: CreatePromiseAction<string>){
-    const mstp = (s) => ({items:select(s)});
+export function connectedAutoCompleteButton<T>(select:(s)=>T[],action: CreatePromiseAction<string>,props?: IAutoCompleteProps<T>){
+    const mstp = (s) => (Object.assign({}, props, {items:select(s)}));
     const mdtp = {onSearchAction: action}
-    return connect(mstp,mdtp)(SearchButton);
+    return connect(mstp,mdtp)(AutoCompleteButton);
 }
 
 
-export {AutoComplete, SearchAnchor, SearchButton}
+export {AutoComplete, AutoCompleteAnchor, AutoCompleteButton,IAutoCompleteProps,IProps}
