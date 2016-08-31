@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Search, {IProps as ISearchProps} from './Typeahead';
+import Search, {IProps as ISearchProps} from './AutoComplete';
 
 
 /**
@@ -43,15 +43,16 @@ export default class SearchAnchor<T> extends React.Component<IProps<T>, IState<T
     }
 
     protected getCaption (){
+
         return  this.state.value && this.state.value.length && this.state.value.length > 0  
-                     ? this.state.value.map(this.props.displayItem).join(', ') 
+                     ? this.state.value.map(i=>i[this.props.labelKey]).join(', ') 
                      : this.props.emptyLabel || 'No value';
     }
 
     render() {
         if (this.state.isOpen) {
             const searchProps = Object.assign({}, this.props, { onChanged: this.onChanged, defaultSelected: this.state.value });
-            return <Search {...searchProps as any} onBlur={this.onBlur as any}/>
+            return <Search  {...searchProps as any} onBlur={this.onBlur as any}/>
         }
         return <a style={{ cursor: 'pointer' }} onClick={this.toggleOpen}>{this.getCaption()}</a>
     }

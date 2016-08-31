@@ -6,9 +6,13 @@ import {Provider} from 'react-redux';
 import {Col, Row} from 'react-bootstrap';
 
 
-let Search = builder.createSearchTextBox(rs.getItemsFromState, rs.search, (item) => item.name);
-let ASearch = builder.createSearchAnchor(rs.getItemsFromState, rs.search, (item) => item.name);
-let BSearch = builder.createSearchButton(rs.getItemsFromState, rs.search, (item) => item.name);
+let Search = builder.createSearchTextBox(rs.getItemsFromState, rs.search, {
+    labelKey: 'name',
+    renderMenuItemChildren: (props, ele, ix) => <span>{ele.name} ({ele.alpha3Code}) </span>
+});
+
+let ASearch = builder.createSearchAnchor(rs.getItemsFromState, rs.search, { labelKey: 'name' });
+let BSearch = builder.createSearchButton(rs.getItemsFromState, rs.search, { labelKey: 'name' });
 
 export default class SearchDemo extends React.Component<any, any> {
     constructor(props) {
@@ -21,24 +25,24 @@ export default class SearchDemo extends React.Component<any, any> {
     }
 
 
-    private display = (props,ele,ix)=> {
-        return <span>{ele.name} ({ele.alpha3Code})</span>
+    private display = (props, ele, ix) => {
+        return <span>{ele.name} ({ele.alpha3Code}) </span>
     }
 
     render() {
         return <Provider store = {rs.default}>
             <div>
-                {[false,true].map((multi, ix) => (
+                <a href='http://github.com/vgmr/yoda-ui-toolkit/blob/master/docs/search.md'>Documentation</a>
+                {[false, true].map((multi, ix) => (
                     <div key={ix} >
-                        <h2 >{multi ? 'Multiple Selection':'Simple Selection'} </h2>
+                        <h2 >{multi ? 'Multiple Selection' : 'Simple Selection'} </h2>
                         <Row>
                             <Col xs={12} sm={4}>
                                 <h4>Standard textbox search</h4>
                                 <Search onChanged={(e) => { this.setState({ ["msg1" + multi]: e }) } }
-                                    minLength={1}
+                                    minLength={3}
                                     multiple={multi}
-                                    labelKey='name'
-                                    renderMenuItemChildren = {this.display}
+                                    debounceTime={200}
                                     placeholder='type a country name (e.g. Italy)'/>
                             </Col>
                             <Col xs={12} sm={4}>
@@ -47,7 +51,6 @@ export default class SearchDemo extends React.Component<any, any> {
                                     placeholder='type a country name (e.g. Italy)'
                                     minLength={1}
                                     multiple={multi}
-                                    labelKey='name'
                                     emptyLabel='No Country Selected'/>
                             </Col>
                             <Col xs={12} sm={4}>
@@ -56,7 +59,6 @@ export default class SearchDemo extends React.Component<any, any> {
                                     placeholder='type a country name (e.g. Italy)'
                                     minLength={1}
                                     multiple={multi}
-                                    labelKey='name'
                                     emptyLabel='No Country Selected'/>
                             </Col>
                         </Row>
@@ -71,7 +73,7 @@ export default class SearchDemo extends React.Component<any, any> {
                                 {displaySelected(this.state["msg3" + multi]) }
                             </Col>
                         </Row>
-                        <Row style={{height:'50px',width:'100%'}}/>
+                        <Row style={{ height: '50px', width: '100%' }}/>
                     </div>
                 )) }
             </div>
@@ -81,7 +83,7 @@ export default class SearchDemo extends React.Component<any, any> {
 }
 
 function displaySelected(s) {
-    return (s && s.length >0) && 'you selected: ' + ([].concat(s)).map(p => p.name).join(', ');
+    return (s && s.length > 0) && 'you selected: ' + ([].concat(s)).map(p => p.name).join(', ');
 }
 
 
