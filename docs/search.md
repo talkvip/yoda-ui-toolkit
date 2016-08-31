@@ -62,7 +62,7 @@ Create a TextBox autocomplete component connected to redux.
 Name | Type | Description
 -----|------|-----------
 select | function (state;S) =>T[] | redux selector that returns the options to display
-action | function | redux-helper promise action that needs to be dispatched on search.
+action | CreatePromiseAction<T> | redux-helper promise action that needs to be dispatched on search.
 options | object | Autocomplete props
 
 
@@ -71,12 +71,23 @@ options | object | Autocomplete props
 ```js
     import {connectedAutoCompleteTextBox} from 'yoda-ui-toolbox';
 
+
+   
     // Connect to redux
-    const CTL = connectedAutoCompleteTextBox(_selector_, _action_ , _optional props_ );
+   
+    const selector = ...                    // redux selector, retrieve from the state the options list
+    const action = ...                      // redux-helper promise action to dispatch when the ctrl need to start a search.
+    const props = { labelKey:'title', ...}   // Autocomplete Props
+    
+    const CTL = connectedAutoCompleteTextBox(selector, action , props );
 
 
     // Usage in TSX
-    <CTL ..props />    
+    <CTL />
+    
+    // It's possible also to pass props as jsx attribute
+    
+    <CTL multi={true} onChange={...} />
 
 ```
 
