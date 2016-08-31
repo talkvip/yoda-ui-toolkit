@@ -32,7 +32,7 @@ export interface IAutoCompleteProps<T> {
      */
     onBlur?: (event: Event) => void;
     /**
-     * array<T>: Specify any pre-selected options. Use only if you want the component to be uncontrolled.
+     * array<T>: The selected option(s) displayed in the input.
      */
     selected?: T | T[];
     /**

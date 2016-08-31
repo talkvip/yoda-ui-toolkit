@@ -23,7 +23,7 @@ Name | Type | Default | Description
 -----|------|---------|------------
 align | string | 'justify' | Specify menu alignment. The default value is `justify`, which makes the menu as wide as the input and truncates long values. Specifying `left` or `right` will align the menu to that side and the width will be determined by the length of menu item values.
 allowNew | boolean | false | Allows the creation of new selections on the fly. Any new items will be added to the list of selections, but not the list of original options unless handled as such by `Typeahead`'s parent. The newly added item will *always* be returned as an object even if the other options are simply strings, so be sure your `onChange` callback can handle this.
-defaultSelected | array | `[]` | Specify any pre-selected options. Use only if you want the component to be uncontrolled.
+selected | array | `[]` | The selected option(s) displayed in the input.
 disabled | boolean | | Whether to disable the input. Will also disable selections when `multiple={true}`.
 emptyLabel | string | 'No matches found.' | Message to display in the menu if there are no valid results.
 labelKey | string | 'label' | Specify which option key to use for display. By default, the selector will use the `label` key.
@@ -46,31 +46,47 @@ onSearchAction | function | | redux-helper CreatePromiseAction to be dispatched 
 optimizeSearch | boolean | | Restrict the actual search to only when the lenght of the searched text is equal to the minLength. The further filtering is done on the same dataset.
 debounceTime | number | | milliseconds to use in order to debounce the actual search.
 
-## createSearchTextBox
+## connectedAutoCompleteTextBox
 
 Create a TextBox autocomplete component connected to redux.
 
 ```js
-    createSearchTextBox <T, S>(
-        getItemsFromState: (state: S) => [string, T[]],
-        onSearchAction: CreatePromiseAction<string>,
-        options?: IAutoCompleteProps<T>
-    ) => typeof Autocomplete
+    export function connectedAutoCompleteTextBox<T>(
+                        select:(s)=>T[],
+                        action: CreatePromiseAction<string>,
+                        props?: IAutoCompleteProps<T>)
 ```
 
 ### Arguments:
 
 Name | Type | Description
 -----|------|-----------
-getItemsFromState | function (state;S) =>[string,t[]] | redux selector that returns an array where the 1st element is the searched text and the 2ns is the data array
-onSearchAction | function | redux-helper promise action that needs to be dispatched on search.
-options        | object | Autocomplete props
+select | function (state;S) =>[string,t[]] | redux selector that returns an array where the 1st element is the searched text and the 2ns is the data array
+action | function | redux-helper promise action that needs to be dispatched on search.
+options | object | Autocomplete props
 
-## createSearchAnchor
 
-Same as createSearchTextBox but will create an anchor instead of a textbox
+> usage
 
-## createSearchButton
+```js
+    import {connectedAutoCompleteTextBox} from 'yoda-ui-toolbox';
 
-Same as createSearchTextBox but will create a button instead of a textbox
+    // Connect to redux
+    const CTL = connectedAutoCompleteTextBox(_selector_, _action_ , _optional props_ );
+
+
+    // Usage in TSX
+    <CTL ..props />    
+
+```
+
+Props can be passed in the connectAutoCompleteTextBox (3rd argument) or iside the JSX element.
+
+## connectedAutoCompleteAnchor
+
+Same as connectedAutoCompleteTextBox but will create an anchor instead of a textbox
+
+## connectedAutoCompleteButton
+
+Same as connectedAutoCompleteTextBox but will create a button instead of a textbox
 
