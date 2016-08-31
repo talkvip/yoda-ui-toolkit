@@ -161,7 +161,6 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     render() {
-        console.log('props', this.props, 'state', this.state);
         const values = this.props.selected ? [].concat(this.props.selected) : [];
         const items = (this.props.items || []).concat(values);
 
