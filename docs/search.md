@@ -61,7 +61,7 @@ Create a TextBox autocomplete component connected to redux.
 
 Name | Type | Description
 -----|------|-----------
-select | function (state;S) =>T[] | redux selector that returns the options to display
+select | function (state:S) =>T[] | redux selector that returns the options to display
 action | CreatePromiseAction<T> | redux-helper promise action that needs to be dispatched on search.
 options | object | Autocomplete props
 
@@ -76,11 +76,13 @@ options | object | Autocomplete props
     // Connect to redux
    
     const selector = ...                    // redux selector, retrieve from the state the options list
-    const action = ...                      // redux-helper promise action to dispatch when the ctrl need to start a search.
+
+    const action = ...                      // redux-helper promise action to dispatch when the ctrl 
+                                            // need to start a search.
+
     const props = { labelKey:'title', ...}  // Autocomplete Props
     
     const CTL = connectedAutoCompleteTextBox(selector, action , props );
-
 
     // Usage in TSX
     
