@@ -19,7 +19,7 @@ export default class SearchDemo extends React.Component<any, any> {
         this.state = {
             msg1: '',
             msg2: '',
-            msg3: ''
+            msg3: '',
         }
     }
 
@@ -57,6 +57,7 @@ export default class SearchDemo extends React.Component<any, any> {
                                 <h4>Button search</h4>
                                 <SearchC onChanged={(e) => { this.setState({ ["msg3" + multi]: e }) } }
                                     placeholder='type a country name (e.g. Italy)'
+                                    selected={this.state["msg1"+multi]}
                                     minLength={1}
                                     multiple={multi}
                                     emptyLabel='No Country Selected'/>

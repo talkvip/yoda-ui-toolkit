@@ -34,7 +34,7 @@ export interface IAutoCompleteProps<T> {
     /**
      * array<T>: Specify any pre-selected options. Use only if you want the component to be uncontrolled.
      */
-    defaultSelected?: T | T[];
+    selected?: T | T[];
     /**
      * boolean: Whether or not multiple selections are allowed.
      */
@@ -132,9 +132,18 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
                            : this.props.onSearchAction
 
         this.state = {
-            selected: props.defaultSelected ? [].concat(props.defaultSelected) :[] 
+            selected: props.selected ? [].concat(props.selected) :[] 
         }
     }
+
+    componentWillReceiveProps (newProps:IProps<T>) {
+        //TODO to optimize
+        this.setState({
+            selected: newProps.selected ? [].concat(newProps.selected) :this.state.selected
+        });
+    }
+
+
     private onSelected = (selected:T[]) => {
         this.setState({
             selected: selected
@@ -153,7 +162,7 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
 
     render() {
         console.log('props', this.props, 'state', this.state);
-        const values = this.props.defaultSelected ? [].concat(this.props.defaultSelected) : [];
+        const values = this.props.selected ? [].concat(this.props.selected) : [];
         const items = (this.props.items || []).concat(values);
 
         const props = {
