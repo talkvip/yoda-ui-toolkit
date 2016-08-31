@@ -1,12 +1,14 @@
 import * as React from 'react';
 import GridDemo from './demo/GridDemo';
 import SearchDemo from './demo/SearchDemo';
+import DatePickerDemo from './demo/DatePickerDemo';
 
 
 
 const data = [
     { title: 'Grid', component: <GridDemo/> },
-    { title: 'Search', component: <SearchDemo/> }
+    { title: 'Search', component: <SearchDemo/> },
+    { title: 'DatePicker', component: <DatePickerDemo/> }
 ]
 
 
