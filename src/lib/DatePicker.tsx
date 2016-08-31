@@ -16,9 +16,7 @@ export interface DatePickerProps {
     dateFormat?: string
 }
 
-const DatePicker = (props: DatePickerProps)  =>{
+export const DatePicker = (props: DatePickerProps)  =>{
     return <InternalDatePicker  {...props}
     />
 }
-
-export default DatePicker;
