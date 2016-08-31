@@ -77,12 +77,13 @@ options | object | Autocomplete props
    
     const selector = ...                    // redux selector, retrieve from the state the options list
     const action = ...                      // redux-helper promise action to dispatch when the ctrl need to start a search.
-    const props = { labelKey:'title', ...}   // Autocomplete Props
+    const props = { labelKey:'title', ...}  // Autocomplete Props
     
     const CTL = connectedAutoCompleteTextBox(selector, action , props );
 
 
     // Usage in TSX
+    
     <CTL />
     
     // It's possible also to pass props as jsx attribute
