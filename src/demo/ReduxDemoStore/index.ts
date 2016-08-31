@@ -10,11 +10,10 @@ export const search = createPromiseAction('SEARCH', localSearch, searchSuccess);
 
 /* Reducers */
 export interface IState {
-    data: QueryItem[],
-    searchText: string
+    data: QueryItem[]
 }
 
-const reducer = (state: IState = { data: [], searchText: '' }, action: Action<IState>) => {
+const reducer = (state: IState = { data: []}, action: Action<IState>) => {
     if (searchSuccess.matchAction(action)) {
         return action.payload;
     }
@@ -27,7 +26,7 @@ export default Redux.createStore(reducer, window["devToolsExtension"] && window[
 
 /* SELECTOR */
 
-export const getItemsFromState = (state: IState): [string, QueryItem[]] => [state.searchText, state.data];
+export const getItemsFromState = (state: IState): QueryItem[]=> state.data;
 
 
 /* API */
@@ -44,13 +43,11 @@ function localSearch(search: string, location: string = 'milan, it', pageIndex: 
                 //ERROR - return empty result...
                 return {
                     data:[],
-                    searchText:search
                 }
             }
 
             return {
                 data: res as QueryItem[],
-                searchText: search
             }
         });
 }

@@ -12,11 +12,6 @@ export interface IPropsFromState<T> {
      * this is usually injected by connect
      */
     items?: T[];
-    /**
-     * string: Last searched text 
-     * this is usually injected by connect
-     */
-    searchedText?: string;
 }
 
 export interface IPropsFromDispatch {
@@ -146,6 +141,7 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     render() {
+        console.log('props', this.props);
         const values = this.props.defaultSelected ? [].concat(this.props.defaultSelected) : [];
         const items = (this.props.items || []).concat(values);
 

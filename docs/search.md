@@ -42,7 +42,6 @@ paginationText | string | 'Display additional results...' | Prompt displayed whe
 placeholder | string | | Placeholder text for the input.
 renderMenuItemChildren | function | | Provides a hook for customized rendering of menu item contents.
 renderToken | function | | Provides a hook for customized rendering of tokens when multiple selections are enabled.
-searchedText | string | | Last seacthed text, usually injected by _connect_
 onSearchAction | function | | redux-helper CreatePromiseAction to be dispatched on search, usually injected by _connect_
 optimizeSearch | boolean | | Restrict the actual search to only when the lenght of the searched text is equal to the minLength. The further filtering is done on the same dataset.
 debounceTime | number | | milliseconds to use in order to debounce the actual search.

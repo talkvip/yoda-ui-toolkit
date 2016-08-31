@@ -2,37 +2,28 @@ import {CreatePromiseAction} from 'redux-helper';
 import {connect} from 'react-redux';
 import SearchAnchor from './SearchAnchor';
 import SearchButton from './SearchButton';
-import AutoComplete, {IPropsFromDispatch, IPropsFromState, IAutoCompleteProps} from './AutoComplete';
+import AutoComplete, {IPropsFromDispatch, IPropsFromState, IAutoCompleteProps, IProps} from './AutoComplete';
 import * as React from 'react';
 
-type ValidType = React.ComponentClass<any> | React.StatelessComponent<any>;
+export * from './AutoComplete';
 
-const createCreator = <C extends ValidType>(compo: C) =>
-    <T, S>(
-        getItemsFromState: (state: S) => [string, T[]],
-        onSearchAction: CreatePromiseAction<string>,
-        options?: IAutoCompleteProps<T>
-    ) => {
+export function connectedAutoCompleteTextBox<T>(select:(s)=>T[],action: CreatePromiseAction<string>){
+    const mstp = (s) => ({items:select(s)});
+    const mdtp = {onSearchAction: action}
+    return connect(mstp,mdtp)(AutoComplete);
+}
 
-        const mapStateToProps = (state: S): IPropsFromState<T> => {
-            const searchResult = getItemsFromState(state);
-            return Object.assign({
-                items: searchResult[1],
-                searchedText: searchResult[0]
-            }, options);
-        }
+export function connectedAutoCompleteAnchor<T>(select:(s)=>T[],action: CreatePromiseAction<string>){
+    const mstp = (s) => ({items:select(s)});
+    const mdtp = {onSearchAction: action}
+    return connect(mstp,mdtp)(SearchAnchor);
+}
 
-        const mapDispatchToProps: IPropsFromDispatch = {
-            onSearchAction: onSearchAction
-        }
+export function connectedAutoCompleteButton<T>(select:(s)=>T[],action: CreatePromiseAction<string>){
+    const mstp = (s) => ({items:select(s)});
+    const mdtp = {onSearchAction: action}
+    return connect(mstp,mdtp)(SearchButton);
+}
 
-        return connect(mapStateToProps, mapDispatchToProps)(compo);
-    }
 
-export const createSearchTextBox = createCreator(AutoComplete);
-
-export const createSearchAnchor = createCreator(SearchAnchor);
-
-export const createSearchButton = createCreator(SearchButton);
-
-export {AutoComplete}
+export {AutoComplete, SearchAnchor, SearchButton}

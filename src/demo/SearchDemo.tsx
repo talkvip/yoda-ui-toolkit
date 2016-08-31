@@ -1,18 +1,15 @@
 import * as React from 'react';
-import * as builder from '../lib/Search';
+import {AutoComplete, IProps,connectedAutoCompleteTextBox,connectedAutoCompleteAnchor,connectedAutoCompleteButton} from '../lib/Search';
 import * as rs from './ReduxDemoStore';
 import {createStore} from 'redux';
+import {CreatePromiseAction} from 'redux-helper';
 import {Provider} from 'react-redux';
 import {Col, Row} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
-
-let Search = builder.createSearchTextBox(rs.getItemsFromState, rs.search, {
-    labelKey: 'name',
-    renderMenuItemChildren: (props, ele, ix) => <span>{ele.name} ({ele.alpha3Code}) </span>
-});
-
-let ASearch = builder.createSearchAnchor(rs.getItemsFromState, rs.search, { labelKey: 'name' });
-let BSearch = builder.createSearchButton(rs.getItemsFromState, rs.search, { labelKey: 'name' });
+const SearchA =  connectedAutoCompleteTextBox(rs.getItemsFromState,rs.search);
+const SearchB =  connectedAutoCompleteButton(rs.getItemsFromState,rs.search);
+const SearchC =  connectedAutoCompleteAnchor(rs.getItemsFromState,rs.search);
 
 export default class SearchDemo extends React.Component<any, any> {
     constructor(props) {
@@ -39,25 +36,29 @@ export default class SearchDemo extends React.Component<any, any> {
                         <Row>
                             <Col xs={12} sm={4}>
                                 <h4>Standard textbox search</h4>
-                                <Search onChanged={(e) => { this.setState({ ["msg1" + multi]: e }) } }
+                                <SearchA onChanged={(e) => { this.setState({ ["msg1" + multi]: e }) } }
                                     minLength={3}
+                                    labelKey='name'
                                     multiple={multi}
                                     debounceTime={200}
                                     placeholder='type a country name (e.g. Italy)'/>
                             </Col>
                             <Col xs={12} sm={4}>
                                 <h4>Anchor search</h4>
-                                <ASearch onChanged={(e) => { this.setState({ ["msg2" + multi]: e }) } }
+                                <SearchB 
+                                    onChanged={(e) => { this.setState({ ["msg2" + multi]: e }) } }
                                     placeholder='type a country name (e.g. Italy)'
                                     minLength={1}
+                                    labelKey='name'
                                     multiple={multi}
                                     emptyLabel='No Country Selected'/>
                             </Col>
                             <Col xs={12} sm={4}>
                                 <h4>Button search</h4>
-                                <BSearch onChanged={(e) => { this.setState({ ["msg3" + multi]: e }) } }
+                                <SearchC onChanged={(e) => { this.setState({ ["msg3" + multi]: e }) } }
                                     placeholder='type a country name (e.g. Italy)'
                                     minLength={1}
+                                    labelKey='name'
                                     multiple={multi}
                                     emptyLabel='No Country Selected'/>
                             </Col>
