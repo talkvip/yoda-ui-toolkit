@@ -16,6 +16,7 @@ export default class DatePickerDemo extends React.Component<any, any> {
         value: e
     });
 
+    
     render() {
         return <div>
             <Col xs={6} sm={2}>
