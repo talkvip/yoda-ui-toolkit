@@ -6,7 +6,7 @@ import {CreatePromiseAction} from 'redux-helper';
 import {Provider} from 'react-redux';
 import {Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-
+import * as moment from 'moment';
 const SearchA = connectedAutoCompleteTextBox(rs.getItemsFromState, rs.search, { labelKey: 'name' });
 const SearchB = connectedAutoCompleteButton(rs.getItemsFromState, rs.search, {
     labelKey: 'name',
@@ -14,7 +14,9 @@ const SearchB = connectedAutoCompleteButton(rs.getItemsFromState, rs.search, {
 });
 const SearchC = connectedAutoCompleteAnchor(rs.getItemsFromState, rs.search, { labelKey: 'name' });
 
-export default class SearchDemo extends React.Component<any, any> {
+
+
+export class Examples extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,12 +32,13 @@ export default class SearchDemo extends React.Component<any, any> {
     }
 
     render() {
-        return <Provider store = {rs.default}>
-            <div>
+
+        return <div>
                 <a href='http://github.com/vgmr/yoda-ui-toolkit/blob/master/docs/search.md'>Documentation</a>
                 {[false, true].map((multi, ix) => (
                     <div key={ix} >
                         <h2 >{multi ? 'Multiple Selection' : 'Simple Selection'} </h2>
+                        <p>{moment().toISOString()}</p>
                         <Row>
                             <Col xs={12} sm={4}>
                                 <h4>Standard textbox search</h4>
@@ -83,17 +86,18 @@ export default class SearchDemo extends React.Component<any, any> {
                         <h4>Controlled</h4>
                         <SearchA 
                             onChanged={(e) => {
+                                console.log('changed',e);
                                 this.setState({ ctld: e }) } 
                             }
                             minLength={2}
                             debounceTime={200}
+                            optimizeSearch={true}
                             selected = {this.state.ctld}
                             placeholder='type a country name (e.g. Italy)'/>
                         <pre> state value:{this.state.ctld && this.state.ctld.length>0 && this.state.ctld[0].name} </pre>
                     </Col>
                 </Row>
             </div>
-        </Provider>
     }
 
 }
@@ -102,6 +106,16 @@ function displaySelected(s) {
     return (s && s.length > 0) && 'you selected: ' + ([].concat(s)).map(p => p.name).join(', ');
 }
 
+
+export  const ConnectedExamples = connect((s)=>({state:s}) ) (Examples);
+
+const SearchDemo = (props) =>{
+    return  <Provider store = {rs.default}>
+            <ConnectedExamples/>
+        </Provider>
+}
+
+export default SearchDemo;
 
 
 

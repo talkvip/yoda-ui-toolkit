@@ -117,12 +117,12 @@ export interface IAutoCompleteProps<T> {
 }
 
 export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IPropsFromDispatch {
+
 }
 
 export interface IState<T> {
     selected: T[];
 }
-
 
 export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T>> {
 
@@ -166,6 +166,7 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     render() {
+        console.log('state',this.state);
         const values = this.props.selected ? [].concat(this.props.selected) : [];
         const items = (this.props.items || []).concat(values);
 
