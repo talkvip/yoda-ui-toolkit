@@ -34,6 +34,11 @@ export interface IAutoCompleteProps<T> {
     /**
      * array<T>: The selected option(s) displayed in the input.
      */
+    defaultSelected?: T | T[];
+
+    /**
+     * array<T>: The selected option(s) displayed in the input.
+     */
     selected?: T | T[];
     /**
      * boolean: Whether or not multiple selections are allowed.
@@ -112,12 +117,12 @@ export interface IAutoCompleteProps<T> {
 }
 
 export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IPropsFromDispatch {
+
 }
 
 export interface IState<T> {
     selected: T[];
 }
-
 
 export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T>> {
 
@@ -161,7 +166,7 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     render() {
-        console.log('props', this.props, 'state', this.state);
+        console.log('state',this.state);
         const values = this.props.selected ? [].concat(this.props.selected) : [];
         const items = (this.props.items || []).concat(values);
 
@@ -169,6 +174,7 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
             allowNew: this.props.allowNew,
             multiple: this.props.multiple,
             selected: this.state.selected, // this.props.defaultSelected && [].concat(this.props.defaultSelected),
+            defaultSelected: this.props.defaultSelected,
             onInputChange: this.onInputChange,
             options: items,
             labelKey: this.props.labelKey,
