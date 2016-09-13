@@ -131,8 +131,10 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     constructor(props: IProps<T>) {
         super(props);
         
-        //If debounceTime is passed, we debounce the onSearchAction
-        this.innerSearch = props.debounceTime  
+        // If debounceTime is passed, we debounce the onSearchAction
+        // if onSearchAction is not passed we don't use it.
+        this.innerSearch = this.props.onSearchAction &&
+                           props.debounceTime  
                            ? debounce(this.props.onSearchAction,this.props.debounceTime)
                            : this.props.onSearchAction
 
@@ -158,10 +160,12 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
     }
 
     private onInputChange = (text:string ) => {
-        if ( this.props.optimizeSearch) {
-            if ( text.length == (this.props.minLength ||3)) this.innerSearch(text);
-        } else {
-            if ( text.length >= (this.props.minLength ||3)) this.innerSearch(text);
+        if (this.innerSearch) {
+            if ( this.props.optimizeSearch) {
+                if ( text.length == (this.props.minLength ||3)) this.innerSearch(text);
+            } else {
+                if ( text.length >= (this.props.minLength ||3)) this.innerSearch(text);
+            }
         }
     }
 
