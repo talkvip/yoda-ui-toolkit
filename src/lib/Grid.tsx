@@ -71,7 +71,7 @@ export interface YodaGridRowProps {
     onSelectItem?: (item: any, selected: boolean) => void,
 }
 export class YodaGridRow extends React.Component<YodaGridRowProps, {}> {
-    private handlerSelect = (e: Event) => {
+    private handlerSelect = (e) => {
         if (this.props.onSelectItem) this.props.onSelectItem(this.props.item, !this.props.selected);
     }
 

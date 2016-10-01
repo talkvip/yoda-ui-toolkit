@@ -40,19 +40,19 @@ export default class GridDemo extends React.Component<any, { items?: any[], mult
         return tmp
     }
 
-    private onCreateClick = (e:Event) =>{
+    private onCreateClick = (e) =>{
 
         if (this.input.value)  {
             this.setState({items: this.createItems(parseInt(this.input.value) )});
         }
     }
-    private onMultiselectClick = (e:Event) =>{
+    private onMultiselectClick = (e) =>{
             this.setState({multiselect: !this.state.multiselect});
     }
 
     render() {
         return <div>
-            <input type='number' defaultValue={this.state.items.length}  ref = {e=> this.input = e}/>
+            <input type='number' defaultValue={this.state.items.length.toString()}  ref = {e=> this.input = e}/>
             <button onClick={this.onCreateClick}>create test rows</button>
             { "   " }
             <button onClick={this.onMultiselectClick}>multiselect {this.state.multiselect ? "on" : "off" }</button>
