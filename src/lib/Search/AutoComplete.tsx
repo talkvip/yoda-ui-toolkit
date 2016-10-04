@@ -104,7 +104,7 @@ export interface IAutoCompleteProps<T> {
      */    
     renderToken?: (option: T, onRemove: () => void) => JSX.Element;
     /**
-     * boolean: restrict the actual search to only when the lenght of the searched text is equal
+     * boolean: restrict the actual search to only when the length of the searched text is equal
      * to the minLength. 
      * The further filtering is done on the same dataset.
      */
