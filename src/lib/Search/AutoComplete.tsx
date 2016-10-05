@@ -202,7 +202,7 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
             paginationText: this.props.paginationText,
             renderMenuItemChildren: this.props.renderMenuItemChildren,
             renderToken: this.props.renderToken,
-            ref: r=> this.props.inputRef && this.props.inputRef (r.refs.instance)
+            ref: r=> this.props.inputRef &&  r && r.refs && r.refs.instance && this.props.inputRef (r.refs.instance)
         }
 
         return <TH {...props}  />

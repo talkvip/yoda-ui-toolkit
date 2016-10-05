@@ -29,7 +29,6 @@ export class Examples extends React.Component<any, any> {
     }
 
     componentDidMount(){
-      console.log(this.contolledInput);
        this.contolledInput.focus();
     }
 
