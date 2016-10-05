@@ -17,6 +17,8 @@ const SearchC = connectedAutoCompleteAnchor(rs.getItemsFromState, rs.search, { l
 
 
 export class Examples extends React.Component<any, any> {
+    private contolledInput: any;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,6 +26,11 @@ export class Examples extends React.Component<any, any> {
             msg2: '',
             msg3: '',
         }
+    }
+
+    componentDidMount(){
+      console.log(this.contolledInput);
+       this.contolledInput.focus();
     }
 
 
@@ -89,6 +96,7 @@ export class Examples extends React.Component<any, any> {
                                 console.log('changed',e);
                                 this.setState({ ctld: e }) } 
                             }
+                            inputRef = {r=>this.contolledInput  = r}
                             minLength={2}
                             debounceTime={200}
                             optimizeSearch={true}

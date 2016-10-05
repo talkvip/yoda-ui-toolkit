@@ -114,6 +114,13 @@ export interface IAutoCompleteProps<T> {
      */
     debounceTime?: number;
 
+    /**
+     * return the reference to the actual typehead component.
+     * on this instance you can execute methods like  focus();
+     */
+
+    inputRef?: (elem:any)=>any;
+
 }
 
 export interface IProps<T> extends IAutoCompleteProps<T>, IPropsFromState<T>, IPropsFromDispatch {
@@ -194,7 +201,8 @@ export default class AutoComplete<T> extends React.Component<IProps<T>, IState<T
             paginate: this.props.paginate,
             paginationText: this.props.paginationText,
             renderMenuItemChildren: this.props.renderMenuItemChildren,
-            renderToken: this.props.renderToken
+            renderToken: this.props.renderToken,
+            ref: r=> this.props.inputRef && this.props.inputRef (r.refs.instance)
         }
 
         return <TH {...props}  />
